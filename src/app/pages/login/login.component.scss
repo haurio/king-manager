@@ -1,0 +1,60 @@
+// Fundo com imagem
+#intro {
+  background-image: url('https://mdbootstrap.com/img/new/fluid/city/008.jpg'); /* Imagem de fundo */
+  background-size: cover; /* Faz a imagem cobrir todo o fundo */
+  background-position: center; /* Posiciona a imagem no centro */
+  height: 100vh; /* Tamanho da tela toda */
+}
+
+// Estilos do card de login
+.card {
+  max-width: 350px; /* Largura máxima do card */
+  border-radius: 10px; /* Borda arredondada do card */
+}
+
+// Estilos dos inputs e rótulos
+.form-outline {
+  position: relative;
+  margin-bottom: 1rem; /* Espaçamento entre os campos */
+}
+
+.form-outline input {
+  border: 2px solid #ced4da; /* Cor da borda do input */
+  border-radius: 5px; /* Borda arredondada */
+  padding: 0.5rem 0.75rem; /* Padding interno */
+  font-size: 0.9rem; /* Tamanho da fonte */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Transição suave para a borda e sombra */
+}
+
+.form-outline label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 5px;
+  transition: all 0.3s ease-in-out; /* Transição suave para o movimento do rótulo */
+  font-size: 0.9rem;
+  color: #6c757d; /* Cor do rótulo */
+  pointer-events: none; /* Impede que o rótulo seja clicável */
+}
+
+// Animação para o rótulo do campo
+.form-outline input:focus ~ label,
+.form-outline input:not(:placeholder-shown) ~ label {
+  top: 0;
+  transform: translateY(-50%) scale(0.85); /* Move o rótulo para o topo e reduz a escala */
+  color: #007bff; /* Muda a cor para azul quando o input é focado */
+  padding: 0 5px;
+}
+
+// Foco no input (sombra e cor da borda)
+.form-outline input:focus {
+  border-color: #007bff; /* Cor da borda quando focado */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul ao redor do campo */
+}
+
+// Remove fundo amarelo do autofill
+input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s !important; /* Previne a cor de fundo amarela do preenchimento automático */
+}
