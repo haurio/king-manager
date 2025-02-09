@@ -1,7 +1,11 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes'; // ✅ Importando corretamente
+import { HttpClientModule } from '@angular/common/http';
+import { appRoutes } from './app.routes';  // Corrigir o nome da importação
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)]
+  providers: [
+    provideRouter(appRoutes), // Configura as rotas
+    importProvidersFrom(HttpClientModule), // Configura o HttpClient
+  ],
 };

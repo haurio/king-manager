@@ -4,12 +4,15 @@
   background-size: cover; /* Faz a imagem cobrir todo o fundo */
   background-position: center; /* Posiciona a imagem no centro */
   height: 100vh; /* Tamanho da tela toda */
+  width: 100%;
 }
 
 // Estilos do card de login
 .card {
   max-width: 380px; /* Largura máxima do card */
   border-radius: 10px; /* Borda arredondada do card */
+  margin: 0 auto; /* Centraliza o card */
+  padding: 2rem;
 }
 
 // Estilos dos inputs e rótulos
@@ -97,16 +100,42 @@ h2:hover, .subtitle:hover {
   text-shadow: 1px 1px 4px rgba(0, 123, 255, 0.5); /* Aumenta a sombra no hover */
 }
 
+// Mensagem de erro
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
 // Footer - Rodapé
 footer {
   background-color: #333;
-color: white;
-text-align: center;
-padding: 0.2rem; /* Ajuste do espaçamento interno */
-position: fixed;
-bottom: 0;
-width: 100%;
-font-size: 0.7rem; /* Tamanho da fonte menor para um rodapé discreto */
-opacity: 0.5; /* Maior transparência para ser menos notável */
-height: 1.5rem; /* Altura do rodapé ainda menor */
+  color: white;
+  text-align: center;
+  padding: 0.2rem; /* Ajuste do espaçamento interno */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.7rem; /* Tamanho da fonte menor para um rodapé discreto */
+  opacity: 0.5; /* Maior transparência para ser menos notável */
+  height: 1.5rem; /* Altura do rodapé ainda menor */
+}
+
+// Responsividade
+@media (max-width: 576px) {
+  .card {
+    width: 90%; /* Ajuste o card para ocupar mais espaço em telas pequenas */
+  }
+
+  h2 {
+    font-size: 1.5rem; /* Ajuste do tamanho do título em telas menores */
+  }
+
+  .subtitle {
+    font-size: 1rem; /* Ajuste do tamanho do subtítulo */
+  }
+
+  footer {
+    font-size: 0.6rem; /* Ajuste do tamanho da fonte em telas pequenas */
+  }
 }

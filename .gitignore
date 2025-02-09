@@ -45,3 +45,6 @@ Thumbs.db
 
 # Git files and logs
 .git/
+
+# Adicionar .env ao .gitignore para evitar que ele seja enviado para repositórios
+.env
