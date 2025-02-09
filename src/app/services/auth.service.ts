@@ -1,4 +1,3 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -13,9 +12,13 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>('/api/auth/login', { username, password }).pipe(
+  login(email: string, password: string): Observable<any> {
+    console.log('Enviando dados para o backend:', { email, password }); // Log dos dados enviados
+
+    // URL ajustada para o caminho correto do backend
+    return this.http.post<any>('http://localhost:3000/api/auth/login', { email, password }).pipe(
       tap((response) => {
+        console.log('Resposta do backend:', response); // Log da resposta recebida
         if (response.token) {
           localStorage.setItem('token', response.token);
           this.loggedIn.next(true);
