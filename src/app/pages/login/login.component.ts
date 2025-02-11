@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';  // Importando FormsModule
 import { CommonModule } from '@angular/common';  // Importando CommonModule
+import { ToastrService } from 'ngx-toastr';  // Importando ToastrService
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,  // Serviço de autenticação
-    private router: Router  // Serviço de roteamento
+    private router: Router,  // Serviço de roteamento
+    private toastr: ToastrService  // Serviço de notificações
   ) {}
 
   onSubmit(): void {
@@ -29,12 +31,13 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
         console.log('Login bem-sucedido', response);
+        this.toastr.success('Login realizado com sucesso!', 'Sucesso');  // Exibe uma notificação de sucesso
         this.router.navigate(['/dashboard']);  // Redireciona para o dashboard após login
       },
       (error) => {
         console.error('Erro no login', error);
-        // Se houver um erro, exibe a mensagem de erro
         this.errorMessage = error.message || 'Usuário ou senha inválidos.';
+        this.toastr.error(this.errorMessage, 'Erro');  // Exibe uma notificação de erro
       }
     );
   }
