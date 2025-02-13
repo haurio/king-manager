@@ -1,0 +1,42 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="nome">Nome</label>
+    <input type="text" class="form-control" id="nome" [(ngModel)]="nome" name="nome" required />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" required />
+  </div>
+
+  <div class="form-group">
+    <label for="senha">Senha</label>
+    <input type="password" class="form-control" id="senha" [(ngModel)]="senha" name="senha" required />
+  </div>
+
+  <div class="form-group">
+    <label for="senhaConfirmada">Confirmar Senha</label>
+    <input type="password" class="form-control" id="senhaConfirmada" [(ngModel)]="senhaConfirmada" name="senhaConfirmada" required />
+  </div>
+
+  <div class="form-group">
+    <label for="telefone">Telefone</label>
+    <input type="text" class="form-control" id="telefone" [(ngModel)]="telefone" name="telefone" required />
+  </div>
+
+  <div class="form-group">
+    <label for="cargo">Cargo</label>
+    <input type="text" class="form-control" id="cargo" [(ngModel)]="cargo" name="cargo" required />
+  </div>
+
+  <div class="form-group">
+    <label for="loja">Loja</label>
+    <input type="text" class="form-control" id="loja" [(ngModel)]="loja" name="loja" required />
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <button type="submit" class="btn btn-primary">Registrar</button>
+</form>
