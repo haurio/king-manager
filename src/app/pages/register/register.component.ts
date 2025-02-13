@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RegisterService } from '../../services/register.service'; // Corrigido: Verifique a importação do serviço
+import { RegisterService } from '../../services/register.service'; // Certifique-se da importação correta
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +23,7 @@ export class RegisterComponent {
   errorMessage: string = '';
 
   constructor(
-    private registerService: RegisterService,  // Corrigido: Injeção correta do serviço
+    private registerService: RegisterService,  // Correto
     private router: Router,
     private toastr: ToastrService
   ) {}
@@ -46,7 +46,7 @@ export class RegisterComponent {
     this.registerService.register(userData).subscribe(
       (response: any) => {  // Tipagem explícita para 'response'
         this.toastr.success('Usuário registrado com sucesso!', 'Sucesso');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/login']);  // Redireciona para a página de login após o registro
       },
       (error: any) => {  // Tipagem explícita para 'error'
         this.errorMessage = error.message || 'Erro ao registrar usuário.';
