@@ -1,43 +1,44 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';  // Importando FormsModule
-import { CommonModule } from '@angular/common';  // Importando CommonModule
-import { ToastrService } from 'ngx-toastr';  // Importando ToastrService
+import { CommonModule } from '@angular/common'; // Importando CommonModule
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule, CommonModule],  // Importando CommonModule para o *ngIf funcionar
+  standalone: true,  // Garantir que o componente é standalone
+  imports: [FormsModule, CommonModule],  // Declarando os módulos necessários
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  currentYear: number = new Date().getFullYear();  // Ano atual
-  username: string = '';  // Variável para armazenar o nome de usuário
-  password: string = '';  // Variável para armazenar a senha
-  errorMessage: string = '';  // Variável para armazenar a mensagem de erro
+  currentYear: number = new Date().getFullYear();
+  username: string = '';
+  password: string = '';
+  passwordVisible: boolean = false;
+  errorMessage: string = '';
 
   constructor(
-    private authService: AuthService,  // Serviço de autenticação
-    private router: Router,  // Serviço de roteamento
-    private toastr: ToastrService  // Serviço de notificações
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
-  onSubmit(): void {
-    this.errorMessage = '';  // Limpa a mensagem de erro anterior
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
 
-    // Chama o serviço de login, passando as credenciais
+  onSubmit(): void {
+    this.errorMessage = '';
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
-        console.log('Login bem-sucedido', response);
-        this.toastr.success('Login realizado com sucesso!', 'Sucesso');  // Exibe uma notificação de sucesso
-        this.router.navigate(['/dashboard']);  // Redireciona para o dashboard após login
+        this.toastr.success('Login realizado com sucesso!', 'Sucesso');
+        this.router.navigate(['/dashboard']);
       },
       (error) => {
-        console.error('Erro no login', error);
         this.errorMessage = error.message || 'Usuário ou senha inválidos.';
-        this.toastr.error(this.errorMessage, 'Erro');  // Exibe uma notificação de erro
+        this.toastr.error(this.errorMessage, 'Erro');
       }
     );
   }

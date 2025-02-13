@@ -1,7 +1,4 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const db = require('../db'); // Conexão com o banco de dados
-
 const router = require('express').Router();
 
 // Função para login
@@ -23,30 +20,16 @@ router.post('/login', (req, res) => {
     const user = results[0]; // Usuário encontrado
     console.log('Usuário encontrado:', user.email);  // Log do usuário encontrado
 
-    // Compara a senha fornecida com a senha armazenada (criptografada)
-    bcrypt.compare(password, user.senha, (err, isMatch) => {
-      if (err) {
-        console.error('Erro ao comparar senha:', err);  // Log de erro
-        return res.status(500).json({ error: 'Erro ao comparar senha' });
-      }
-
-      if (!isMatch) {
-        console.log('Senha incorreta para o usuário:', email);  // Log de senha incorreta
-        return res.status(401).json({ message: 'Usuário ou senha inválidos' });
-      }
-
-      // Criação do token JWT
-      const token = jwt.sign(
-        { id: user.id, email: user.email },  // Use email para identificar o usuário
-        process.env.JWT_SECRET, // Chave secreta
-        { expiresIn: '1h' } // O token expira em 1 hora
-      );
-
-      console.log('Token gerado para o usuário:', user.email);  // Log do token gerado
-
-      // Retorna o token para o cliente
-      res.json({ token });
-    });
+    // Verifica se a senha fornecida corresponde à senha armazenada
+    if (user.senha === password) {
+      // Senha correta
+      console.log('Senha correta para o usuário:', email);  // Log de senha correta
+      return res.json({ message: 'Login realizado com sucesso!' });
+    } else {
+      // Senha incorreta
+      console.log('Senha incorreta para o usuário:', email);  // Log de senha incorreta
+      return res.status(401).json({ message: 'Usuário ou senha inválidos' });
+    }
   });
 });
 

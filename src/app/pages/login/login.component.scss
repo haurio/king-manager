@@ -13,6 +13,7 @@
   border-radius: 10px; /* Borda arredondada do card */
   margin: 0 auto; /* Centraliza o card */
   padding: 2rem;
+  min-height: 350px; /* Garantir uma altura mínima no card */
 }
 
 // Estilos dos inputs e rótulos
@@ -24,15 +25,16 @@
 .form-outline input {
   border: 2px solid #ced4da; /* Cor da borda do input */
   border-radius: 5px; /* Borda arredondada */
-  padding: 0.5rem 0.75rem; /* Padding interno */
+  padding: 0.5rem 0.75rem; /* Padding original, para manter o tamanho dos campos */
   font-size: 0.9rem; /* Tamanho da fonte */
   transition: border-color 0.3s, box-shadow 0.3s; /* Transição suave para a borda e sombra */
+  width: 100%; /* Garantir que o input ocupe toda a largura disponível */
 }
 
 .form-outline label {
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: 12px;
   transform: translateY(-50%);
   background: white;
   padding: 0 5px;
@@ -57,54 +59,59 @@
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul ao redor do campo */
 }
 
-// Remove fundo amarelo do autofill
-input:-webkit-autofill {
-  transition: background-color 5000s ease-in-out 0s !important; /* Previne a cor de fundo amarela do preenchimento automático */
+// Ícone de olho
+.form-outline i {
+  position: absolute;
+  top: 50%;
+  right: 15px; /* Distância ajustada */
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1rem; /* Tamanho reduzido do ícone */
+  color: rgba(108, 117, 125, 0.6); /* Cor mais suave e com opacidade */
+  transition: color 0.3s ease-in-out; /* Transição suave para a cor */
+}
+
+.form-outline i:hover {
+  color: rgba(0, 123, 255, 0.6); /* Cor ao passar o mouse com transparência */
 }
 
 // Ajusta a imagem do logo
 .logo-img {
   width: 150px; /* Ajuste o tamanho conforme necessário */
   height: auto;
+  max-width: 100%; /* Garante que o logo seja responsivo */
 }
 
 // Título do formulário
 h2 {
-  margin-bottom: 0.3rem; /* Espaçamento pequeno abaixo do título */
-  font-size: 1.7rem; /* Tamanho de fonte ajustado */
-  color: #333; /* Cor escura */
-  font-weight: 600; /* Peso da fonte */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  background: linear-gradient(to right, #007bff, #00d4ff); /* Gradiente de azul */
-  -webkit-background-clip: text; /* Faz o fundo afetar o texto */
-  color: transparent; /* Torna o texto transparente */
+  margin-bottom: 0.3rem;
+  font-size: 1.7rem;
+  color: #333;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, #007bff, #00d4ff);
+  -webkit-background-clip: text;
+  color: transparent;
   text-align: center;
 }
 
 // Subtítulo do formulário
 .subtitle {
   text-align: center;
-  margin-bottom: 20px; /* Espaço entre o subtítulo e os campos */
-  font-size: 1rem; /* Tamanho de fonte ajustado */
-  color: #555; /* Cor suave */
-  font-weight: 500; /* Peso da fonte */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  background: linear-gradient(to right, #007bff, #00d4ff); /* Gradiente de azul */
-  -webkit-background-clip: text; /* Faz o fundo afetar o texto */
-  color: transparent; /* Torna o texto transparente */
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, #007bff, #00d4ff);
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 // Mudança de cor e sombra quando o mouse passa sobre o título e subtítulo
 h2:hover, .subtitle:hover {
-  color: #007bff; /* Cor azul ao passar o mouse */
-  text-shadow: 1px 1px 4px rgba(0, 123, 255, 0.5); /* Aumenta a sombra no hover */
-}
-
-// Mensagem de erro
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
+  color: #007bff;
+  text-shadow: 1px 1px 4px rgba(0, 123, 255, 0.5);
 }
 
 // Footer - Rodapé
@@ -112,30 +119,34 @@ footer {
   background-color: #333;
   color: white;
   text-align: center;
-  padding: 0.2rem; /* Ajuste do espaçamento interno */
+  padding: 0.2rem;
   position: fixed;
   bottom: 0;
   width: 100%;
-  font-size: 0.7rem; /* Tamanho da fonte menor para um rodapé discreto */
-  opacity: 0.5; /* Maior transparência para ser menos notável */
-  height: 1.5rem; /* Altura do rodapé ainda menor */
+  font-size: 0.7rem;
+  opacity: 0.5;
+  height: 1.5rem;
 }
 
 // Responsividade
 @media (max-width: 576px) {
   .card {
-    width: 90%; /* Ajuste o card para ocupar mais espaço em telas pequenas */
+    width: 90%;
   }
 
   h2 {
-    font-size: 1.5rem; /* Ajuste do tamanho do título em telas menores */
+    font-size: 1.5rem;
   }
 
   .subtitle {
-    font-size: 1rem; /* Ajuste do tamanho do subtítulo */
+    font-size: 1rem;
   }
 
   footer {
-    font-size: 0.6rem; /* Ajuste do tamanho da fonte em telas pequenas */
+    font-size: 0.6rem;
+  }
+
+  .logo-img {
+    width: 120px; /* Ajuste do logo em telas pequenas */
   }
 }
