@@ -34,12 +34,13 @@
     <label for="cargo" class="form-label">Cargo</label>
     <select class="form-control form-input" id="cargo" [(ngModel)]="cargo" name="cargo" required>
       <option value="" disabled selected>Selecione o Cargo</option>
-      <option value="gerente">Gerente</option>
-      <option value="supervisor">Supervisor</option>
-      <option value="vendedor">Vendedor</option>
+      <option *ngFor="let cargo of cargos" [value]="cargo.id">
+        {{ cargo.nome }}
+      </option>
     </select>
   </div>
 
+  <!-- Alterando o campo Loja para o mesmo formato do campo Cargo -->
   <div class="form-group">
     <label for="loja" class="form-label">Loja</label>
     <select class="form-control form-input" id="loja" name="loja" [(ngModel)]="loja" required>

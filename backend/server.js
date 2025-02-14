@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const loja = require('./routes/loja');  // Corrigir o caminho para './routes/loja'
+
+// Importa os módulos de loja e cargo
+const loja = require('./routes/loja');  // Certifique-se que o arquivo loja.js está correto
+const cargo = require('./routes/cargo'); // Agora importando corretamente o arquivo cargo.js
 
 const app = express();
 
@@ -18,6 +21,17 @@ app.get('/api/empresas', (req, res) => {
       res.status(500).json({ error: 'Erro ao buscar empresas' });
     } else {
       res.json(empresas);  // Retorna as empresas como JSON
+    }
+  });
+});
+
+// Rota para obter todos os cargos
+app.get('/api/cargos', (req, res) => {
+  cargo.getCargos((err, cargos) => {
+    if (err) {
+      res.status(500).json({ error: 'Erro ao buscar cargos' });
+    } else {
+      res.json(cargos);  // Retorna os cargos como JSON
     }
   });
 });

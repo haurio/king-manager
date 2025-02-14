@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EmpresaService } from '../../services/empresa.service';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { CargoService } from '../../services/cargo.service'; // Importando o serviço de cargos
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [EmpresaService]
+  providers: [EmpresaService, CargoService] // Adicionando o CargoService ao provedor
 })
 export class RegisterComponent implements OnInit {
   nome: string = '';
@@ -24,25 +25,28 @@ export class RegisterComponent implements OnInit {
   senha: string = '';
   senhaConfirmada: string = '';
   telefone: string = '';
-  cargo: string = '';
+  cargo: string = ''; // Agora com a string do cargo
   loja: string = ''; // Armazena o ID da loja selecionada
   errorMessage: string = '';
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
   lojas: { id: string; nome: string }[] = []; // Ajustando para corresponder à estrutura correta
+  cargos: { id: string; nome: string }[] = []; // Armazenando os cargos
   responseRecaptcha: string | null = null; // Para armazenar a resposta do reCAPTCHA
 
   private empresaService = inject(EmpresaService);
+  private cargoService = inject(CargoService); // Injetando o CargoService
 
   ngOnInit(): void {
     this.carregarLojas();
+    this.carregarCargos(); // Carregar os cargos
   }
 
   /** Carrega os dados das lojas */
   carregarLojas(): void {
     this.empresaService.getLojas().subscribe(
       (data: any) => {
-        console.log('Dados recebidos:', data); // Verifique se os dados estão corretos
+        console.log('Dados recebidos das lojas:', data); // Verifique se os dados estão corretos
         this.lojas = data.map((empresa: any) => ({
           id: empresa.empresa_id,
           nome: empresa.nome_fantasia
@@ -51,6 +55,23 @@ export class RegisterComponent implements OnInit {
       (error) => {
         console.error('Erro ao carregar lojas:', error);
         this.errorMessage = 'Erro ao carregar lojas.';
+      }
+    );
+  }
+
+  /** Carrega os dados dos cargos */
+  carregarCargos(): void {
+    this.cargoService.getCargos().subscribe(
+      (data: any) => {
+        console.log('Dados recebidos dos cargos:', data); // Verifique se os dados estão corretos
+        this.cargos = data.map((cargo: any) => ({
+          id: cargo.cargo_id,
+          nome: cargo.nome_cargo
+        }));
+      },
+      (error) => {
+        console.error('Erro ao carregar cargos:', error);
+        this.errorMessage = 'Erro ao carregar cargos.';
       }
     );
   }
@@ -65,7 +86,11 @@ export class RegisterComponent implements OnInit {
 
   /** Função chamada quando o reCAPTCHA for resolvido */
   onCaptchaResolved(captchaResponse: string | null): void {
-    this.responseRecaptcha = captchaResponse; // Agora aceita tanto 'string' quanto 'null'
+    if (captchaResponse) {
+      this.responseRecaptcha = captchaResponse; // Guarda a resposta do reCAPTCHA
+    } else {
+      this.responseRecaptcha = ''; // Caso não tenha sido resolvido, coloca uma string vazia
+    }
   }
 
   /** Submete o formulário */
