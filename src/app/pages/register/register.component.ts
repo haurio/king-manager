@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   senhaConfirmada: string = '';
   telefone: string = '';
   cargo: string = ''; // Agora com a string do cargo
-  loja: string = ''; // Armazena o ID da loja selecionada
+  loja: string = ''; // Armazenando o ID da loja selecionada
   errorMessage: string = '';
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
@@ -97,6 +97,11 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     if (this.senha !== this.senhaConfirmada) {
       this.errorMessage = 'As senhas não coincidem!';
+      return;
+    }
+
+    if (this.senha.length < 8) {
+      this.errorMessage = 'Senha necessita de conter pelo menos 8 caracteres.';
       return;
     }
 

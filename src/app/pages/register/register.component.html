@@ -1,38 +1,98 @@
 <form (ngSubmit)="onSubmit()" class="modern-form">
   <div class="form-group">
     <label for="nome" class="form-label">Nome</label>
-    <input type="text" class="form-control form-input" id="nome" [(ngModel)]="nome" name="nome" required placeholder="Digite seu nome" />
+    <input
+      type="text"
+      class="form-control form-input"
+      id="nome"
+      [(ngModel)]="nome"
+      name="nome"
+      required
+      placeholder="Digite seu nome"
+    />
   </div>
 
   <div class="form-group">
     <label for="email" class="form-label">Email</label>
-    <input type="email" class="form-control form-input" id="email" [(ngModel)]="email" name="email" required placeholder="Digite seu email" />
+    <input
+      type="email"
+      class="form-control form-input"
+      id="email"
+      [(ngModel)]="email"
+      name="email"
+      required
+      placeholder="Digite seu email"
+    />
   </div>
 
   <div class="form-group">
     <label for="senha" class="form-label">Senha</label>
     <div class="password-container">
-      <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control form-input" id="senha" [(ngModel)]="senha" name="senha" required placeholder="Digite sua senha" />
-      <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePasswordVisibility()"></i>
+      <input
+        [type]="isPasswordVisible ? 'text' : 'password'"
+        class="form-control form-input"
+        id="senha"
+        [(ngModel)]="senha"
+        name="senha"
+        required
+        placeholder="Digite sua senha"
+      />
+      <i
+        class="fa"
+        [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"
+        (click)="togglePasswordVisibility()"
+      ></i>
+    </div>
+    <div *ngIf="senha && senha.length < 8" class="text-danger mt-2">
+      Senha necessita de conter pelo menos 8 caracteres.
+    </div>
+    <div *ngIf="senhaConfirmada && senha !== senhaConfirmada" class="text-danger mt-2">
+      Senha e confirmação não correspondem.
     </div>
   </div>
 
   <div class="form-group">
     <label for="senhaConfirmada" class="form-label">Confirmar Senha</label>
     <div class="password-container">
-      <input [type]="isConfirmPasswordVisible ? 'text' : 'password'" class="form-control form-input" id="senhaConfirmada" [(ngModel)]="senhaConfirmada" name="senhaConfirmada" required placeholder="Confirme sua senha" />
-      <i class="fa" [ngClass]="isConfirmPasswordVisible ? 'fa-eye-slash' : 'fa-eye'" (click)="toggleConfirmPasswordVisibility()"></i>
+      <input
+        [type]="isConfirmPasswordVisible ? 'text' : 'password'"
+        class="form-control form-input"
+        id="senhaConfirmada"
+        [(ngModel)]="senhaConfirmada"
+        name="senhaConfirmada"
+        required
+        placeholder="Confirme sua senha"
+      />
+      <i
+        class="fa"
+        [ngClass]="isConfirmPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"
+        (click)="toggleConfirmPasswordVisibility()"
+      ></i>
     </div>
   </div>
 
   <div class="form-group">
     <label for="telefone" class="form-label">Telefone</label>
-    <input type="text" class="form-control form-input" id="telefone" [(ngModel)]="telefone" name="telefone" required placeholder="Digite seu telefone" />
+    <input
+      type="text"
+      class="form-control form-input"
+      id="telefone"
+      [(ngModel)]="telefone"
+      name="telefone"
+      required
+      placeholder="Digite seu telefone"
+    />
   </div>
 
   <div class="form-group">
     <label for="cargo" class="form-label">Cargo</label>
-    <select class="form-control form-input" id="cargo" [(ngModel)]="cargo" name="cargo" required>
+    <select
+      class="form-control form-input"
+      id="cargo"
+      [(ngModel)]="cargo"
+      name="cargo"
+      required
+    >
       <option value="" disabled selected>Selecione o Cargo</option>
       <option *ngFor="let cargo of cargos" [value]="cargo.id">
         {{ cargo.nome }}
@@ -40,10 +100,15 @@
     </select>
   </div>
 
-  <!-- Alterando o campo Loja para o mesmo formato do campo Cargo -->
   <div class="form-group">
     <label for="loja" class="form-label">Loja</label>
-    <select class="form-control form-input" id="loja" name="loja" [(ngModel)]="loja" required>
+    <select
+      class="form-control form-input"
+      id="loja"
+      name="loja"
+      [(ngModel)]="loja"
+      required
+    >
       <option value="" disabled selected>Selecione a Loja</option>
       <option *ngFor="let loja of lojas" [value]="loja.id">
         {{ loja.nome }}
@@ -51,7 +116,6 @@
     </select>
   </div>
 
-  <!-- reCAPTCHA -->
   <div class="form-group">
     <re-captcha siteKey="SUA_CHAVE_DO_SITE" (resolved)="onCaptchaResolved($event)"></re-captcha>
   </div>
@@ -60,5 +124,10 @@
     {{ errorMessage }}
   </div>
 
-  <button type="submit" class="btn btn-primary btn-submit animated-button">Registrar</button>
+  <button
+    type="submit"
+    class="btn btn-primary btn-submit animated-button"
+  >
+    Registrar
+  </button>
 </form>
