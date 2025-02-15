@@ -1,44 +1,41 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const db = require('../config/db');
+// routes/register_user.js
+const bcrypt = require('bcryptjs');
+const db = require('../config/database'); // Certifique-se de que o caminho está correto
 
-const router = express.Router();
-
-// Rota para registrar um novo usuário
-router.post('/api/auth/register', (req, res) => {
-  const { nome, email, senha, telefone, cargo, loja } = req.body;
-
-  if (!nome || !email || !senha || !telefone || !cargo || !loja) {
-    return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
-  }
-
-  // Verificar se o email já está cadastrado
-  db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+// Função para registrar um usuário
+function registerUser({ nome, email, senha, loja, cargo, telefone }, callback) {
+  // Verificar se o email já está registrado
+  const checkEmailQuery = 'SELECT * FROM Users WHERE email = ?';
+  db.query(checkEmailQuery, [email], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao verificar usuário' });
+      return callback('Erro ao verificar o email', null);
     }
 
+    // Se o email já estiver registrado
     if (results.length > 0) {
-      return res.status(400).json({ message: 'Email já cadastrado' });
+      return callback('Email já está registrado!', null);
     }
 
-    // Criptografar a senha
+    // Hash da senha
     bcrypt.hash(senha, 10, (err, hashedPassword) => {
       if (err) {
-        return res.status(500).json({ error: 'Erro ao criptografar a senha' });
+        return callback('Erro ao hashiar a senha', null);
       }
 
-      // Inserir o novo usuário no banco de dados
-      const query = 'INSERT INTO users (nome, email, senha, telefone, cargo, loja) VALUES (?, ?, ?, ?, ?, ?)';
-      db.query(query, [nome, email, hashedPassword, telefone, cargo, loja], (err, result) => {
+      // Inserir o usuário no banco de dados
+      const query = `INSERT INTO Users (nome, email, senha, loja, cargo, telefone)
+                     VALUES (?, ?, ?, ?, ?, ?)`;
+
+      db.query(query, [nome, email, hashedPassword, loja, cargo, telefone], (err, result) => {
         if (err) {
-          return res.status(500).json({ error: 'Erro ao registrar usuário' });
+          return callback('Erro ao registrar o usuário', null);
         }
 
-        res.status(201).json({ message: 'Usuário registrado com sucesso' });
+        // Sucesso no registro
+        return callback(null, 'Usuário registrado com sucesso!');
       });
     });
   });
-});
+}
 
-module.exports = router;
+module.exports = { registerUser };  // Exporta a função

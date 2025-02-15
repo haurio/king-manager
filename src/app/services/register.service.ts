@@ -3,14 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root' // Isso garante que o serviço esteja disponível globalmente
+  providedIn: 'root'
 })
 export class RegisterService {
-  private apiUrl = 'http://localhost:3000/api/auth/register'; // URL da API de registro
+  private apiUrl = 'http://localhost:3000/api'; // URL do seu backend
 
   constructor(private http: HttpClient) {}
 
-  register(userData: any): Observable<any> {
-    return this.http.post(this.apiUrl, userData);
+  /** Registra um novo usuário */
+  registrarUsuario(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, userData);
   }
 }

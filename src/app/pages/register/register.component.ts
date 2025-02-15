@@ -3,8 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EmpresaService } from '../../services/empresa.service';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { CargoService } from '../../services/cargo.service'; // Importando o serviço de cargos
+import { RegisterService } from '../../services/register.service'; // Importando o serviço de registro
 
 @Component({
   selector: 'app-register',
@@ -13,11 +13,10 @@ import { CargoService } from '../../services/cargo.service'; // Importando o ser
     FormsModule,
     CommonModule,
     HttpClientModule,
-    RecaptchaModule // Adicionando o RecaptchaModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [EmpresaService, CargoService] // Adicionando o CargoService ao provedor
+  providers: [EmpresaService, CargoService, RegisterService] // Adicionando o RegisterService
 })
 export class RegisterComponent implements OnInit {
   nome: string = '';
@@ -32,10 +31,10 @@ export class RegisterComponent implements OnInit {
   isConfirmPasswordVisible: boolean = false;
   lojas: { id: string; nome: string }[] = []; // Ajustando para corresponder à estrutura correta
   cargos: { id: string; nome: string }[] = []; // Armazenando os cargos
-  responseRecaptcha: string | null = null; // Para armazenar a resposta do reCAPTCHA
 
   private empresaService = inject(EmpresaService);
   private cargoService = inject(CargoService); // Injetando o CargoService
+  private registerService = inject(RegisterService); // Injetando o RegisterService
 
   ngOnInit(): void {
     this.carregarLojas();
@@ -84,15 +83,6 @@ export class RegisterComponent implements OnInit {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
 
-  /** Função chamada quando o reCAPTCHA for resolvido */
-  onCaptchaResolved(captchaResponse: string | null): void {
-    if (captchaResponse) {
-      this.responseRecaptcha = captchaResponse; // Guarda a resposta do reCAPTCHA
-    } else {
-      this.responseRecaptcha = ''; // Caso não tenha sido resolvido, coloca uma string vazia
-    }
-  }
-
   /** Submete o formulário */
   onSubmit(): void {
     if (this.senha !== this.senhaConfirmada) {
@@ -105,23 +95,19 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    if (!this.responseRecaptcha) {
-      this.errorMessage = 'Você precisa verificar o reCAPTCHA!';
-      return;
-    }
-
     const userData = {
       nome: this.nome,
       email: this.email,
       senha: this.senha,
       telefone: this.telefone,
       cargo: this.cargo,
-      empresa_id: this.loja // Enviando o ID da loja selecionada
+      loja: this.loja
     };
 
-    this.empresaService.registrarUsuario(userData).subscribe(
+    this.registerService.registrarUsuario(userData).subscribe(
       (response) => {
         console.log('Usuário registrado com sucesso:', response);
+        // Adicionar lógica de sucesso (ex.: limpar campos ou redirecionar)
       },
       (error) => {
         console.error('Erro ao registrar usuário:', error);
