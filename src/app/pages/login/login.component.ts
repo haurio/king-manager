@@ -30,8 +30,8 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    this.errorMessage = '';
-    this.authService.login(this.email, this.senha).subscribe(  // Enviando 'email' e 'senha'
+    this.errorMessage = ''; // Limpa a mensagem de erro antes de uma nova tentativa de login
+    this.authService.login(this.email, this.senha).subscribe(
       (response) => {
         // Salva o token no localStorage
         this.authService.saveToken(response.token);
@@ -40,7 +40,15 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']); // Redireciona para o Dashboard após login
       },
       (error) => {
-        this.errorMessage = error.message || 'Usuário ou senha inválidos.';
+        // Ajuste para capturar a mensagem correta de erro
+        if (error.status === 400) {
+          this.errorMessage = error.error?.error || 'Usuário ou senha inválidos.'; // Verifique o formato do erro
+        } else if (error.status === 404) {
+          this.errorMessage = error.error?.error || 'Usuário não encontrado.';
+        } else {
+          this.errorMessage = 'Erro desconhecido. Tente novamente mais tarde.';
+        }
+
         this.toastr.error(this.errorMessage, 'Erro');
       }
     );

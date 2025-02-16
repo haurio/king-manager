@@ -13,7 +13,8 @@ export class AuthService {
 
   // Método para fazer login
   login(email: string, senha: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { email, senha });
+    const headers = { 'Content-Type': 'application/json' };
+    return this.http.post<any>(this.apiUrl, { email, senha }, { headers });
   }
 
   // Método para verificar se o usuário está logado (checa se o token está presente no localStorage)
