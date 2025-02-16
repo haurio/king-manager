@@ -17,7 +17,8 @@ import { RegisterService } from '../../services/register.service';
   styleUrls: ['./register.component.scss'],
   providers: [EmpresaService, CargoService, RegisterService]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit{
+  currentYear: number = new Date().getFullYear();
   nome: string = '';
   email: string = '';
   senha: string = '';

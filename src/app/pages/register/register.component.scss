@@ -1,77 +1,94 @@
-body {
-
+/* Estilo geral da página */
+html, body {
   height: 100%;
+  font-family: Arial, sans-serif;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #f0f4f8; /* Cor suave de fundo */
+  padding: 0;
+  background: linear-gradient(135deg, rgba(255, 138, 0, 0.7), rgba(0, 206, 255, 0.7)); /* Gradiente para o fundo */
+  background-size: cover;
   display: flex;
-  justify-content: center; /* Garante que o conteúdo seja centralizado */
-  align-items: center; /* Alinha o conteúdo no centro verticalmente */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+/* Contêiner da página de registro */
+.register-page-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0; /* Cor de fundo simples */
+  background: linear-gradient(135deg, rgba(255, 138, 0, 0.7), rgba(0, 206, 255, 0.7)); /* Gradiente para o fundo */
+  background-size: cover;
+  flex-direction: column;
+  padding: 1rem;
 }
 
+
+/* Contêiner do formulário */
 .form-container {
   margin-top: 10px;
   background: #fff;
-  padding: 25px; /* Menos padding para tornar o form mais compacto */
+  padding: 20px; /* Menos padding para tornar o formulário mais compacto */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px; /* Reduz a largura máxima */
+  max-width: 350px; /* Reduz a largura máxima */
   box-sizing: border-box;
   justify-self: center;
 }
 
+/* Estilo do título */
 h2 {
-  font-size: 28px; /* Aumenta o tamanho da fonte */
-  color: #333; /* Cor escura, mais elegante */
-  margin-bottom: 30px; /* Espaçamento abaixo do título */
-  text-align: center; /* Centraliza o título */
-  font-weight: 600; /* Torna a fonte mais forte */
-  letter-spacing: 1px; /* Adiciona espaçamento entre as letras */
-  text-transform: uppercase; /* Deixa o texto em maiúsculas */
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave ao texto */
+  font-size: 24px; /* Ajuste para um título mais compacto */
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
 
-  /* Definindo animação */
-  opacity: 0; /* Inicialmente o título está invisível */
-  transform: translateY(20px); /* Inicia o título com um pequeno deslocamento para baixo */
-  animation: fadeInUp 1s ease-out forwards; /* Aplica a animação */
+  /* Animação de entrada */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease-out forwards;
 }
 
-/* Definindo a animação fadeInUp */
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* Começa deslocado para baixo */
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0); /* Chega ao seu local original */
+    transform: translateY(0);
   }
 }
 
-/* Mudando a cor do título quando o mouse passar */
+/* Mudança de cor no título ao passar o mouse */
 h2:hover {
-  color: #007bff; /* Cor azul quando o mouse passa por cima */
-  cursor: pointer; /* Alterar o cursor para indicar interatividade */
-  transition: color 0.3s ease; /* Animação suave na troca de cor */
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
+/* Estilos do campo de entrada */
 .form-group {
-  margin-bottom: 15px; /* Menos margem entre os campos */
+  margin-bottom: 15px;
   position: relative;
 }
 
 .form-label {
-  font-size: 14px; /* Reduz a fonte dos rótulos */
+  font-size: 14px;
   color: #666;
-  text-align: left;
-  margin-bottom: 5px; /* Menos espaço abaixo dos rótulos */
+  margin-bottom: 5px;
 }
 
 .form-control {
   width: 100%;
-  padding: 12px; /* Menos padding nos campos de entrada */
-  font-size: 14px; /* Reduz o tamanho da fonte dos campos */
+  padding: 10px; /* Reduzido o padding */
+  font-size: 14px;
   border-radius: 8px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
@@ -85,27 +102,30 @@ h2:hover {
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
+/* Ícone da senha */
 .password-container {
   position: relative;
 }
 
 .password-container i {
   position: absolute;
-  right: 12px; /* Ícone menor e mais próximo do campo */
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 18px; /* Ícone um pouco menor */
-  color: #007bff;
+  font-size: 18px;
+  color: rgba(128, 128, 128, 0.5); /* Cor cinza claro com opacidade */
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
+/* Estilo do botão */
 button {
-  padding: 12px; /* Menos padding nos botões */
+  padding: 12px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 16px; /* Tamanho de fonte do botão ajustado */
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -116,9 +136,10 @@ button:hover {
   background-color: #0056b3;
 }
 
+/* Estilo de alerta de erro */
 .alert {
-  margin-top: 15px; /* Menos margem para o alerta */
-  padding: 10px; /* Menos padding no alerta */
+  margin-top: 15px;
+  padding: 10px;
   background-color: #f8d7da;
   color: #721c24;
   border-radius: 8px;
@@ -130,9 +151,10 @@ button:hover {
   font-weight: bold;
 }
 
+/* Responsividade para telas menores */
 @media (max-width: 600px) {
   .form-container {
-    padding: 20px; /* Menos padding para telas pequenas */
+    padding: 15px; /* Menos padding para telas pequenas */
   }
 
   .form-control {
@@ -142,4 +164,27 @@ button:hover {
   button {
     font-size: 14px; /* Botão menor */
   }
+
+  h2 {
+    font-size: 20px; /* Tamanho de fonte do título reduzido */
+  }
+}
+
+
+/* Footer - Rodapé */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 0.2rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.7rem;
+  opacity: 0.5;
+  height: 1.5rem;
+}
+
+footer {
+  font-size: 0.6rem;
 }

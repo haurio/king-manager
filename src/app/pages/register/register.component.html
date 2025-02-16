@@ -1,118 +1,124 @@
-<div class="form-container">
-  <h2>Registrar-se</h2>
-  <form (ngSubmit)="onSubmit()" class="modern-form">
-    <div class="form-group">
-      <label for="nome" class="form-label">Nome</label>
-      <input
-        type="text"
-        class="form-control"
-        id="nome"
-        [(ngModel)]="nome"
-        name="nome"
-        required
-        placeholder="Digite seu nome"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="email" class="form-label">E-mail</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        [(ngModel)]="email"
-        name="email"
-        required
-        placeholder="Digite seu e-mail"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="senha" class="form-label">Senha</label>
-      <div class="password-container">
+<div class="register-page-background"> <!-- Essa div recebe o fundo -->
+  <div class="form-container">
+    <h2>Registrar-se</h2>
+    <form (ngSubmit)="onSubmit()" class="modern-form">
+      <div class="form-group">
+        <label for="nome" class="form-label">Nome</label>
         <input
-          [type]="isPasswordVisible ? 'text' : 'password'"
+          type="text"
           class="form-control"
-          id="senha"
-          [(ngModel)]="senha"
-          name="senha"
+          id="nome"
+          [(ngModel)]="nome"
+          name="nome"
           required
-          placeholder="Digite sua senha"
+          placeholder="Digite seu nome"
         />
-        <i
-          class="fa position-absolute"
-          [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"
-          (click)="togglePasswordVisibility()"
-        ></i>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="senhaConfirmada" class="form-label">Confirmar Senha</label>
-      <div class="password-container">
+      <div class="form-group">
+        <label for="email" class="form-label">E-mail</label>
         <input
-          [type]="isConfirmPasswordVisible ? 'text' : 'password'"
+          type="email"
           class="form-control"
-          id="senhaConfirmada"
-          [(ngModel)]="senhaConfirmada"
-          name="senhaConfirmada"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
           required
-          placeholder="Confirme sua senha"
+          placeholder="Digite seu e-mail"
         />
-        <i
-          class="fa position-absolute"
-          [ngClass]="isConfirmPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"
-          (click)="toggleConfirmPasswordVisibility()"
-        ></i>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="telefone" class="form-label">Telefone</label>
-      <input
-        type="text"
-        class="form-control"
-        id="telefone"
-        [(ngModel)]="telefone"
-        name="telefone"
-        required
-        placeholder="Digite seu telefone"
-      />
-    </div>
+      <div class="form-group">
+        <label for="senha" class="form-label">Senha</label>
+        <div class="password-container">
+          <input
+            [type]="isPasswordVisible ? 'text' : 'password'"
+            class="form-control"
+            id="senha"
+            [(ngModel)]="senha"
+            name="senha"
+            required
+            placeholder="Digite sua senha"
+          />
+          <i
+            class="fa position-absolute"
+            [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"
+            (click)="togglePasswordVisibility()"
+          ></i>
+        </div>
+      </div>
 
-    <!-- Seleção de Cargo -->
-    <div class="form-group">
-      <label for="cargo" class="form-label">Cargo</label>
-      <select
-        class="form-control"
-        id="cargo"
-        [(ngModel)]="cargo"
-        name="cargo"
-        required
-      >
-        <option value="" disabled selected>Selecione o Cargo</option>
-        <option *ngFor="let cargo of cargos" [value]="cargo.nome_cargo">{{ cargo.nome_cargo }}</option>
-      </select>
-    </div>
+      <div class="form-group">
+        <label for="senhaConfirmada" class="form-label">Confirmar Senha</label>
+        <div class="password-container">
+          <input
+            [type]="isConfirmPasswordVisible ? 'text' : 'password'"
+            class="form-control"
+            id="senhaConfirmada"
+            [(ngModel)]="senhaConfirmada"
+            name="senhaConfirmada"
+            required
+            placeholder="Confirme sua senha"
+          />
+          <i
+            class="fa position-absolute"
+            [ngClass]="isConfirmPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"
+            (click)="toggleConfirmPasswordVisibility()"
+          ></i>
+        </div>
+      </div>
 
-    <!-- Seleção de Empresa -->
-    <div class="form-group">
-      <label for="empresa" class="form-label">Empresa</label>
-      <select
-        class="form-control"
-        id="empresa"
-        [(ngModel)]="loja"
-        name="loja"
-        required
-      >
-        <option value="" disabled selected>Selecione a Empresa</option>
-        <option *ngFor="let empresa of empresas" [value]="empresa.nome_fantasia">{{ empresa.nome_fantasia }}</option>
-      </select>
-    </div>
+      <div class="form-group">
+        <label for="telefone" class="form-label">Telefone</label>
+        <input
+          type="text"
+          class="form-control"
+          id="telefone"
+          [(ngModel)]="telefone"
+          name="telefone"
+          required
+          placeholder="Digite seu telefone"
+        />
+      </div>
 
-    <!-- Mensagem de erro -->
-    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+      <!-- Seleção de Cargo -->
+      <div class="form-group">
+        <label for="cargo" class="form-label">Cargo</label>
+        <select
+          class="form-control"
+          id="cargo"
+          [(ngModel)]="cargo"
+          name="cargo"
+          required
+        >
+          <option value="" disabled selected>Selecione o Cargo</option>
+          <option *ngFor="let cargo of cargos" [value]="cargo.nome_cargo">{{ cargo.nome_cargo }}</option>
+        </select>
+      </div>
 
-    <button type="submit" class="btn btn-primary btn-submit">Registrar</button>
-  </form>
+      <!-- Seleção de Empresa -->
+      <div class="form-group">
+        <label for="empresa" class="form-label">Empresa</label>
+        <select
+          class="form-control"
+          id="empresa"
+          [(ngModel)]="loja"
+          name="loja"
+          required
+        >
+          <option value="" disabled selected>Selecione a Empresa</option>
+          <option *ngFor="let empresa of empresas" [value]="empresa.nome_fantasia">{{ empresa.nome_fantasia }}</option>
+        </select>
+      </div>
+
+      <!-- Mensagem de erro -->
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+      <button type="submit" class="btn btn-primary btn-submit">Registrar</button>
+    </form>
+  </div>
 </div>
+
+<footer class="text-center mt-5">
+  <p>&copy; {{ currentYear }} GRUPO ALVIM - ALVIM PARTICIPAÇÕES E INVESTIMENTOS S/A</p>
+</footer>
