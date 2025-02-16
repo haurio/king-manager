@@ -31,10 +31,13 @@ export class LoginComponent {
 
   onSubmit(): void {
     this.errorMessage = '';
-    this.authService.login(this.email, this.senha).subscribe(  // Aqui é um POST
+    this.authService.login(this.email, this.senha).subscribe(  // Enviando 'email' e 'senha'
       (response) => {
+        // Salva o token no localStorage
+        this.authService.saveToken(response.token);
+
         this.toastr.success('Login realizado com sucesso!', 'Sucesso');
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard']); // Redireciona para o Dashboard após login
       },
       (error) => {
         this.errorMessage = error.message || 'Usuário ou senha inválidos.';
