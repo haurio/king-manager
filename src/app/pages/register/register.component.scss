@@ -1,69 +1,145 @@
-/* Garantir que o body e html ocupem toda a altura da tela */
-body, html {
+body {
+
   height: 100%;
   margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f0f4f8; /* Cor suave de fundo */
   display: flex;
-  justify-content: center;  /* Centraliza horizontalmente */
-  align-items: center;      /* Centraliza verticalmente */
-  background-color: #f7f7f7; /* Fundo suave */
+  justify-content: center; /* Garante que o conteúdo seja centralizado */
+  align-items: center; /* Alinha o conteúdo no centro verticalmente */
 }
 
-/* Estilo do formulário */
-.modern-form {
+.form-container {
+  margin-top: 10px;
+  background: #fff;
+  padding: 25px; /* Menos padding para tornar o form mais compacto */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;  /* Limita a largura máxima do formulário */
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Reduz a largura máxima */
+  box-sizing: border-box;
+  justify-self: center;
+}
+
+h2 {
+  font-size: 28px; /* Aumenta o tamanho da fonte */
+  color: #333; /* Cor escura, mais elegante */
+  margin-bottom: 30px; /* Espaçamento abaixo do título */
+  text-align: center; /* Centraliza o título */
+  font-weight: 600; /* Torna a fonte mais forte */
+  letter-spacing: 1px; /* Adiciona espaçamento entre as letras */
+  text-transform: uppercase; /* Deixa o texto em maiúsculas */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave ao texto */
+
+  /* Definindo animação */
+  opacity: 0; /* Inicialmente o título está invisível */
+  transform: translateY(20px); /* Inicia o título com um pequeno deslocamento para baixo */
+  animation: fadeInUp 1s ease-out forwards; /* Aplica a animação */
+}
+
+/* Definindo a animação fadeInUp */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* Começa deslocado para baixo */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Chega ao seu local original */
+  }
+}
+
+/* Mudando a cor do título quando o mouse passar */
+h2:hover {
+  color: #007bff; /* Cor azul quando o mouse passa por cima */
+  cursor: pointer; /* Alterar o cursor para indicar interatividade */
+  transition: color 0.3s ease; /* Animação suave na troca de cor */
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* Menos margem entre os campos */
+  position: relative;
 }
 
 .form-label {
-  font-weight: 500;
+  font-size: 14px; /* Reduz a fonte dos rótulos */
+  color: #666;
+  text-align: left;
+  margin-bottom: 5px; /* Menos espaço abaixo dos rótulos */
 }
 
 .form-control {
   width: 100%;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 12px; /* Menos padding nos campos de entrada */
+  font-size: 14px; /* Reduz o tamanho da fonte dos campos */
+  border-radius: 8px;
   border: 1px solid #ccc;
+  background-color: #f9f9f9;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
 .password-container {
   position: relative;
 }
 
-.position-relative {
-  position: relative;
-}
-
-.position-absolute {
+.password-container i {
   position: absolute;
+  right: 12px; /* Ícone menor e mais próximo do campo */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px; /* Ícone um pouco menor */
+  color: #007bff;
+  cursor: pointer;
 }
 
 button {
-  width: 100%;
-  padding: 10px;
+  padding: 12px; /* Menos padding nos botões */
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 16px; /* Tamanho de fonte do botão ajustado */
+  font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
-/* Ajuste para telas menores */
+.alert {
+  margin-top: 15px; /* Menos margem para o alerta */
+  padding: 10px; /* Menos padding no alerta */
+  background-color: #f8d7da;
+  color: #721c24;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #f5c6cb;
+}
+
+.alert strong {
+  font-weight: bold;
+}
+
 @media (max-width: 600px) {
-  .modern-form {
-    padding: 15px;
+  .form-container {
+    padding: 20px; /* Menos padding para telas pequenas */
+  }
+
+  .form-control {
+    font-size: 12px; /* Fonte menor para dispositivos pequenos */
+  }
+
+  button {
+    font-size: 14px; /* Botão menor */
   }
 }

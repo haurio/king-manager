@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; // Adicionando a importação do Router
 import { EmpresaService } from '../../services/empresa.service';
 import { CargoService } from '../../services/cargo.service';
 import { RegisterService } from '../../services/register.service';
@@ -22,8 +23,8 @@ export class RegisterComponent implements OnInit {
   senha: string = '';
   senhaConfirmada: string = '';
   telefone: string = '';
-  cargo: string = ''; // Agora estamos armazenando o nome do cargo
-  loja: string = ''; // Agora estamos armazenando o nome da loja (empresa)
+  cargo: string = '';
+  loja: string = '';
   errorMessage: string = '';
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
@@ -33,6 +34,7 @@ export class RegisterComponent implements OnInit {
   private empresaService = inject(EmpresaService);
   private cargoService = inject(CargoService);
   private registerService = inject(RegisterService);
+  private router = inject(Router); // Injeção do Router
 
   ngOnInit(): void {
     this.carregarEmpresas();
@@ -118,6 +120,9 @@ export class RegisterComponent implements OnInit {
         console.log('Usuário registrado com sucesso:', response);
         alert('Cadastro realizado com sucesso!');
         this.limparCampos();
+
+        // Redireciona para a página de login após o registro bem-sucedido
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Erro ao registrar usuário:', error);
@@ -132,8 +137,8 @@ export class RegisterComponent implements OnInit {
     this.senha = '';
     this.senhaConfirmada = '';
     this.telefone = '';
-    this.cargo = '';  // Limpando o nome do cargo
-    this.loja = '';  // Limpando o nome da loja
+    this.cargo = '';
+    this.loja = '';
     this.errorMessage = '';
   }
 }
