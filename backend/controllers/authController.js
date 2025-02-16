@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../config/database'); // Conexão com o banco de dados
 
-const router = express.Router();
+const router = express.Router(); // Definindo o router
 
 // Rota para autenticar o usuário
 router.post('/login', (req, res) => {
@@ -44,14 +44,25 @@ router.post('/login', (req, res) => {
 
       // Gera um token JWT para o usuário
       const token = jwt.sign(
-        { id: user.id, email: user.email },
+        { user_id: user.user_id, email: user.email }, // Usando 'user_id' aqui
         process.env.JWT_SECRET || 'secreta_chave', // Use uma variável de ambiente para a chave secreta
         { expiresIn: '1h' } // O token expira em 1 hora
       );
 
-      res.json({ message: 'Login bem-sucedido!', token });
+      // Atualiza o token e o último login
+      const updateQuery = 'UPDATE users SET token = ?, ultimo_login = NOW() WHERE user_id = ?'; // Alterar 'id' para 'user_id'
+      db.query(updateQuery, [token, user.user_id], (err, updateResults) => {
+        if (err) {
+          console.error('Erro ao atualizar token e último login:', err);
+          return res.status(500).json({ error: 'Erro ao atualizar informações no banco.' });
+        }
+
+        console.log('Resultado da atualização:', updateResults);
+
+        res.json({ message: 'Login bem-sucedido!', token });
+      });
     });
   });
 });
 
-module.exports = router;
+module.exports = router; // Exportando o router
