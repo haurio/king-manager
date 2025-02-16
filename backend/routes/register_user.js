@@ -16,6 +16,10 @@ function registerUser({ nome, email, senha, loja, cargo, telefone }, callback) {
       return callback('Email já está registrado!', null);
     }
 
+    // Debugging: Verificar se os valores de loja e cargo estão corretos
+    console.log('Loja:', loja);  // Adicione este log para ver o valor de loja
+    console.log('Cargo:', cargo);  // Adicione este log para ver o valor de cargo
+
     // Hash da senha
     bcrypt.hash(senha, 10, (err, hashedPassword) => {
       if (err) {

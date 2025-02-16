@@ -1,10 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EmpresaService } from '../../services/empresa.service';
-import { CargoService } from '../../services/cargo.service'; // Importando o serviço de cargos
-import { RegisterService } from '../../services/register.service'; // Importando o serviço de registro
+import { CargoService } from '../../services/cargo.service';
+import { RegisterService } from '../../services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -12,11 +11,10 @@ import { RegisterService } from '../../services/register.service'; // Importando
   imports: [
     FormsModule,
     CommonModule,
-    HttpClientModule,
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [EmpresaService, CargoService, RegisterService] // Adicionando o RegisterService
+  providers: [EmpresaService, CargoService, RegisterService]
 })
 export class RegisterComponent implements OnInit {
   nome: string = '';
@@ -24,55 +22,53 @@ export class RegisterComponent implements OnInit {
   senha: string = '';
   senhaConfirmada: string = '';
   telefone: string = '';
-  cargo: string = ''; // Agora com a string do cargo
-  loja: string = ''; // Armazenando o ID da loja selecionada
+  cargo: string = ''; // Agora estamos armazenando o nome do cargo
+  loja: string = ''; // Agora estamos armazenando o nome da loja (empresa)
   errorMessage: string = '';
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
-  lojas: { id: string; nome: string }[] = []; // Ajustando para corresponder à estrutura correta
-  cargos: { id: string; nome: string }[] = []; // Armazenando os cargos
+  empresas: { empresa_id: string; nome_fantasia: string }[] = [];
+  cargos: { cargo_id: string; nome_cargo: string }[] = [];
 
   private empresaService = inject(EmpresaService);
-  private cargoService = inject(CargoService); // Injetando o CargoService
-  private registerService = inject(RegisterService); // Injetando o RegisterService
+  private cargoService = inject(CargoService);
+  private registerService = inject(RegisterService);
 
   ngOnInit(): void {
-    this.carregarLojas();
-    this.carregarCargos(); // Carregar os cargos
+    this.carregarEmpresas();
+    this.carregarCargos();
   }
 
-  /** Carrega os dados das lojas */
-  carregarLojas(): void {
-    this.empresaService.getLojas().subscribe(
-      (data: any) => {
-        console.log('Dados recebidos das lojas:', data); // Verifique se os dados estão corretos
-        this.lojas = data.map((empresa: any) => ({
-          id: empresa.empresa_id,
-          nome: empresa.nome_fantasia
+  carregarEmpresas(): void {
+    this.empresaService.getLojas().subscribe({
+      next: (data: any) => {
+        console.log('Empresas carregadas:', data);
+        this.empresas = data.map((empresa: any) => ({
+          empresa_id: empresa.empresa_id,
+          nome_fantasia: empresa.nome_fantasia
         }));
       },
-      (error) => {
-        console.error('Erro ao carregar lojas:', error);
-        this.errorMessage = 'Erro ao carregar lojas.';
+      error: (error) => {
+        console.error('Erro ao carregar empresas:', error);
+        this.errorMessage = 'Erro ao carregar empresas.';
       }
-    );
+    });
   }
 
-  /** Carrega os dados dos cargos */
   carregarCargos(): void {
-    this.cargoService.getCargos().subscribe(
-      (data: any) => {
-        console.log('Dados recebidos dos cargos:', data); // Verifique se os dados estão corretos
+    this.cargoService.getCargos().subscribe({
+      next: (data: any) => {
+        console.log('Cargos carregados:', data);
         this.cargos = data.map((cargo: any) => ({
-          id: cargo.cargo_id,
-          nome: cargo.nome_cargo
+          cargo_id: cargo.cargo_id,
+          nome_cargo: cargo.nome_cargo
         }));
       },
-      (error) => {
+      error: (error) => {
         console.error('Erro ao carregar cargos:', error);
         this.errorMessage = 'Erro ao carregar cargos.';
       }
-    );
+    });
   }
 
   togglePasswordVisibility(): void {
@@ -83,36 +79,61 @@ export class RegisterComponent implements OnInit {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
 
-  /** Submete o formulário */
   onSubmit(): void {
+    this.errorMessage = ''; // Limpa mensagens anteriores
+
+    // Verificando se todos os campos estão preenchidos corretamente
+    if (!this.nome || !this.email || !this.senha || !this.senhaConfirmada || !this.telefone || !this.cargo || !this.loja) {
+      this.errorMessage = 'Todos os campos são obrigatórios!';
+      return;
+    }
+
+    // Verificando se as senhas coincidem
     if (this.senha !== this.senhaConfirmada) {
       this.errorMessage = 'As senhas não coincidem!';
       return;
     }
 
-    if (this.senha.length < 8) {
-      this.errorMessage = 'Senha necessita de conter pelo menos 8 caracteres.';
+    // Verificando a complexidade da senha
+    if (this.senha.length < 8 || !/[!@#$%^&*(),.?":{}|<>]/.test(this.senha)) {
+      this.errorMessage = 'A senha deve ter pelo menos 8 caracteres e um caractere especial.';
       return;
     }
 
+    // Agora estamos enviando os nomes dos cargos e lojas, ao invés dos IDs
     const userData = {
       nome: this.nome,
       email: this.email,
       senha: this.senha,
       telefone: this.telefone,
-      cargo: this.cargo,
-      loja: this.loja
+      cargo: this.cargo,  // Enviando o nome do cargo
+      loja: this.loja  // Enviando o nome da loja
     };
 
-    this.registerService.registrarUsuario(userData).subscribe(
-      (response) => {
+    console.log('Enviando dados para o backend:', userData);
+
+    // Enviando os dados para o backend
+    this.registerService.registrarUsuario(userData).subscribe({
+      next: (response) => {
         console.log('Usuário registrado com sucesso:', response);
-        // Adicionar lógica de sucesso (ex.: limpar campos ou redirecionar)
+        alert('Cadastro realizado com sucesso!');
+        this.limparCampos();
       },
-      (error) => {
+      error: (error) => {
         console.error('Erro ao registrar usuário:', error);
-        this.errorMessage = 'Erro ao registrar o usuário. Tente novamente mais tarde.';
+        this.errorMessage = error.error?.error || 'Erro ao registrar o usuário. Tente novamente mais tarde.';
       }
-    );
+    });
+  }
+
+  limparCampos(): void {
+    this.nome = '';
+    this.email = '';
+    this.senha = '';
+    this.senhaConfirmada = '';
+    this.telefone = '';
+    this.cargo = '';  // Limpando o nome do cargo
+    this.loja = '';  // Limpando o nome da loja
+    this.errorMessage = '';
   }
 }
