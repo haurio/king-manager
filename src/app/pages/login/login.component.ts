@@ -14,8 +14,8 @@ import { CommonModule } from '@angular/common'; // Importando CommonModule
 })
 export class LoginComponent {
   currentYear: number = new Date().getFullYear();
-  username: string = '';
-  password: string = '';
+  email: string = '';  // Alterado para 'email'
+  senha: string = '';  // Alterado para 'senha'
   passwordVisible: boolean = false;
   errorMessage: string = '';
 
@@ -31,7 +31,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     this.errorMessage = '';
-    this.authService.login(this.username, this.password).subscribe(
+    this.authService.login(this.email, this.senha).subscribe(  // Aqui é um POST
       (response) => {
         this.toastr.success('Login realizado com sucesso!', 'Sucesso');
         this.router.navigate(['/dashboard']);

@@ -1,47 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {}
+  private apiUrl = 'http://localhost:3000/api/auth/login';  // URL da API de login
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/auth/login', { email, password }).pipe(
-      tap((response) => {
-        if (response.message === 'Login bem-sucedido') {
-          // Salve os dados do usuário se necessário
-          localStorage.setItem('user', JSON.stringify(response.user));
-          this.loggedIn.next(true);
-          this.toastr.success('Login realizado com sucesso!', 'Sucesso');
-          this.router.navigate(['/dashboard']);
-        }
-      }),
-      catchError((error) => {
-        this.toastr.error(error.message || 'Usuário ou senha inválidos.', 'Erro');
-        throw error;
-      })
-    );
+  constructor(private http: HttpClient) { }
+
+  // Método para fazer login
+  login(email: string, senha: string): Observable<any> {
+    return this.http.post<any>(this.apiUrl, { email, senha });
   }
 
+  // Método para verificar se o usuário está logado (checa se o token está presente no localStorage)
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('authToken');
+    return token !== null;  // Retorna true se o token estiver presente
+  }
+
+  // Método para fazer logout (remove o token do localStorage)
   logout(): void {
-    localStorage.removeItem('user');
-    this.loggedIn.next(false);
-    this.router.navigate(['/login']);
+    localStorage.removeItem('authToken');
   }
 
-  isLoggedIn(): Observable<boolean> {
-    return this.loggedIn.asObservable();
+  // Método para salvar o token (pode ser utilizado ao fazer login com sucesso)
+  saveToken(token: string): void {
+    localStorage.setItem('authToken', token);
   }
 
-  getUser(): any {
-    return JSON.parse(localStorage.getItem('user') || '{}');
+  // Método para obter o token do localStorage
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
   }
 }

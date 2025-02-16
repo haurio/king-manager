@@ -1,41 +1,48 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
-const db = require('../config/db');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const db = require('../config/database'); // Conexão com o banco de dados
 
 const router = express.Router();
 
-// Rota de login
-router.post('/api/auth/login', (req, res) => {
-  const { email, password } = req.body;
+// Rota para autenticar o usuário
+router.post('/login', (req, res) => {
+  const { email, senha } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email e senha são obrigatórios' });
+  // Verifica se o email e senha foram fornecidos
+  if (!email || !senha) {
+    return res.status(400).json({ error: 'Email e senha são obrigatórios.' });
   }
 
-  // Verificar no banco de dados se o usuário existe
-  db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+  // Busca o usuário no banco de dados pelo email
+  const query = 'SELECT * FROM users WHERE email = ?';
+  db.query(query, [email], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: 'Erro ao buscar usuário' });
+      return res.status(500).json({ error: 'Erro no servidor.' });
     }
 
     if (results.length === 0) {
-      return res.status(401).json({ message: 'Usuário ou senha inválidos' });
+      return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
 
     const user = results[0];
 
-    // Comparar a senha informada com a armazenada no banco
-    bcrypt.compare(password, user.senha, (err, isMatch) => {
+    bcrypt.compare(senha, user.senha, (err, isMatch) => {
       if (err) {
-        return res.status(500).json({ error: 'Erro ao comparar senha' });
+        return res.status(500).json({ error: 'Erro no servidor.' });
       }
 
       if (!isMatch) {
-        return res.status(401).json({ message: 'Usuário ou senha inválidos' });
+        return res.status(400).json({ error: 'Senha incorreta.' });
       }
 
-      // Login bem-sucedido
-      res.json({ message: 'Login bem-sucedido', user });
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET || 'secreta_chave',
+        { expiresIn: '1h' }
+      );
+
+      res.json({ message: 'Login bem-sucedido!', token });
     });
   });
 });

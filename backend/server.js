@@ -1,12 +1,12 @@
-// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-// Importa os módulos de loja, cargo e registro
+// Importa os módulos de loja, cargo, registro e autenticação
 const loja = require('./routes/loja'); // Módulo de loja
 const cargo = require('./routes/cargo'); // Módulo de cargo
 const registerController = require('./controllers/registerController'); // Módulo de registro
+const authRoutes = require('./routes/auth'); // Módulo de autenticação (novo)
 
 const app = express();
 
@@ -38,6 +38,9 @@ app.get('/api/cargos', (req, res) => {
 
 // Rota para registrar um usuário (via controller de registro)
 app.use('/api', registerController); // Integrando o controller de registro
+
+// Rota de autenticação (login)
+app.use('/api/auth', authRoutes); // Integrando a rota de autenticação
 
 // Inicia o servidor na porta configurada
 const PORT = process.env.PORT || 3000; // Porta configurável via variável de ambiente

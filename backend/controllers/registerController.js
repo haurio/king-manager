@@ -1,4 +1,9 @@
-// controllers/registerController.js
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const db = require('../config/database');  // Certifique-se de que o caminho para o banco de dados está correto
+const router = express.Router();  // Inicializando o router
+
+// Rota para registrar um novo usuário
 router.post('/register', (req, res) => {
   const { nome, email, senha, loja, cargo, telefone } = req.body;
 
@@ -8,7 +13,7 @@ router.post('/register', (req, res) => {
   }
 
   // Verificar se o email já está registrado
-  const checkEmailQuery = 'SELECT * FROM Users WHERE email = ?';
+  const checkEmailQuery = 'SELECT * FROM users WHERE email = ?';
   db.query(checkEmailQuery, [email], (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Erro ao verificar o email' });
@@ -16,7 +21,7 @@ router.post('/register', (req, res) => {
 
     // Se o email já estiver registrado
     if (results.length > 0) {
-      return res.status(400).json({ error: 'Email já está registrado!' });  // Alteração aqui
+      return res.status(400).json({ error: 'Email já está registrado!' });
     }
 
     // Hash da senha
@@ -26,7 +31,7 @@ router.post('/register', (req, res) => {
       }
 
       // Inserir o usuário no banco de dados
-      const query = `INSERT INTO Users (nome, email, senha, loja, cargo, telefone)
+      const query = `INSERT INTO users (nome, email, senha, loja, cargo, telefone)
                      VALUES (?, ?, ?, ?, ?, ?)`;
 
       db.query(query, [nome, email, hashedPassword, loja, cargo, telefone], (err, result) => {
@@ -40,3 +45,5 @@ router.post('/register', (req, res) => {
     });
   });
 });
+
+module.exports = router;  // Exportando o router para ser usado no server.js
