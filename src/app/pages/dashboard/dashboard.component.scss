@@ -1,8 +1,4 @@
 /* ===================== Variáveis ===================== */
-:root {
-  --icon-color: #b0b0b0; /* Cor dos ícones, um tom mais claro que o branco */
-  --text-color: var(--white); /* Cor do texto */
-}
 
 /* ===================== Sidebar ===================== */
 .sidebar {
@@ -20,13 +16,26 @@
   z-index: 100;
 }
 
+/* ===================== Linha Separadora ===================== */
+.separator {
+  border: 0;
+  border-top: 2px solid var(--white); /* Linha fina e colorida */
+  margin-top: 2px; /* /* Espaço mínimo entre o grupo Alvim e a linha */
+  width: 100%; /* Largura total */
+}
+
 .sidebar .brand {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  justify-content: center; /* Centraliza o título */
+  margin-bottom: 0px; /* Elimina o espaço extra abaixo do título */
   color: var(--text-color);
   font-weight: bold;
   text-transform: uppercase;
+
+  /* Linha separadora entre "Grupo Alvim" e o conteúdo da sidebar */
+  border-bottom: 2px solid var(--primary-color); /* Linha separadora */
+  padding-bottom: 10px; /* Espaçamento abaixo da marca */
 }
 
 .sidebar .brand .logo {
@@ -36,6 +45,7 @@
 
 .sidebar .brand .title {
   font-size: 1.4rem;
+  text-align: center; /* Garante que o texto esteja centralizado */
 }
 
 .sidebar .nav-links {
@@ -60,7 +70,7 @@
 .sidebar .nav-links .nav-item .icon {
   font-size: 1.5rem;
   margin-right: 15px;
-  color: var(--icon-color); /* Cor dos ícones, diferente do texto */
+  color: var(--icon-color); /* Cor dos ícones */
 }
 
 .sidebar .nav-links .nav-item.active,
@@ -70,6 +80,11 @@
   transform: translateX(10px);
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
+}
+
+/* Alterando a cor do ícone para azul quando a aba está ativa */
+.sidebar .nav-links .nav-item.active .icon {
+  color: var(--icon-color-active); /* Cor azul para ícone ativo */
 }
 
 /* Sidebar Colapsada */
@@ -99,7 +114,7 @@
   color: var(--black);
   position: fixed;
   top: 0;
-  left: 240px;
+  left: 250px;
   right: 0;
   z-index: 999;
   border-bottom: none;
