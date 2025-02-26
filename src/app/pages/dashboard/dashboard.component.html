@@ -1,1 +1,99 @@
-<p>dashboard works!</p>
+<div class="container">
+  <!-- =============== Sidebar ================ -->
+  <div class="sidebar">
+    <div class="brand">
+      <img src="assets/images/Logo_icon.png" alt="Logo" class="logo" />
+      <span class="title">Grupo Alvim</span>
+    </div>
+    <hr class="separator" />
+    <ul class="nav-links" #navigation>
+      <li *ngFor="let tab of tabs">
+        <div
+          class="nav-item"
+          [ngClass]="{ active: selectedTab.id === tab.id, hovered: hoveredTab === tab.id }"
+          (click)="selectTab(tab)"
+          (mouseover)="hoverTab(tab.id)">
+          <!-- Ícone da aba -->
+          <i class="fa-solid icon" [ngClass]="'fa-' + tab.icon"></i>
+          <span class="title">{{ tab.label }}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ========================= Main Content ==================== -->
+  <div class="main">
+    <div class="topbar">
+      <div class="toggle" #toggle>
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <div class="userInfo">
+        <span>Bem-vindo, Usuário</span>
+      </div>
+    </div>
+
+    <!-- ======================= Card Box ================== -->
+    <div class="cardBox">
+      <div class="card">
+        <div class="cardInfo">
+          <div class="numbers">R$ 0,00</div>
+          <div class="cardName">PDV 1</div>
+        </div>
+        <div class="iconBx">
+          <i class="fa-solid fa-eye"></i>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardInfo">
+          <div class="numbers">R$ 0,00</div>
+          <div class="cardName">DELIVERY</div>
+        </div>
+        <div class="iconBx">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardInfo">
+          <div class="numbers">R$ 0,00</div>
+          <div class="cardName">TOTEM 1</div>
+        </div>
+        <div class="iconBx">
+          <i class="fa-solid fa-comments"></i>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardInfo">
+          <div class="numbers">R$ 0,00</div>
+          <div class="cardName">TOTEM 2</div>
+        </div>
+        <div class="iconBx">
+          <i class="fa-solid fa-money-bill"></i>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardInfo">
+          <div class="numbers">R$ 0,00</div>
+          <div class="cardName">TOTAL VENDAS</div>
+        </div>
+        <div class="iconBx">
+          <i class="fa-solid fa-coins"></i>
+        </div>
+      </div>
+
+      <!-- Adicionando o Card para Resumo Financeiro com ícone analítico -->
+      <div class="card">
+        <div class="cardInfo">
+          <div class="numbers">R$ 0,00</div>
+          <div class="cardName">RESUMO FINANCEIRO</div>
+        </div>
+        <div class="iconBx">
+          <i class="fa-solid fa-chart-line"></i> <!-- Ícone Analítico -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
