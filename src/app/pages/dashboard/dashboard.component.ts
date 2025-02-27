@@ -1,5 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service'; // Caminho corrigido
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DashboardComponent implements AfterViewInit {
   selectedTab = { id: 'dashboard' }; // Aba inicial selecionada
-  hoveredTab: string | null = null;  // Armazena a aba atualmente em hover
+  hoveredTab: string | null = null; // Aba atualmente em hover
   isCollapsed = false; // Estado da sidebar (colapsada ou expandida)
 
   // Referências para os elementos do DOM
@@ -18,7 +20,7 @@ export class DashboardComponent implements AfterViewInit {
   @ViewChild('main', { static: false }) main!: ElementRef;
   @ViewChild('toggle', { static: false }) toggle!: ElementRef;
 
-  // Definindo as abas de navegação com ícones e rótulos
+  // Definição das abas de navegação
   tabs = [
     { id: 'dashboard', label: 'Dashboard', icon: 'home' },
     { id: 'perfil', label: 'Perfil', icon: 'user' },
@@ -27,10 +29,11 @@ export class DashboardComponent implements AfterViewInit {
     { id: 'despesas', label: 'Despesas', icon: 'wallet' },
     { id: 'transacoes', label: 'Transações Diárias', icon: 'exchange-alt' },
     { id: 'configuracao', label: 'Configurações', icon: 'cogs' },
-    { id: 'resumo-financeiro', label: 'Resumo Financeiro', icon: 'chart-line' }
-
+    { id: 'resumo-financeiro', label: 'Resumo Financeiro', icon: 'chart-line' },
+    { id: 'logout', label: 'Log out', icon: 'sign-out-alt' } // Adicionando Logout
   ];
 
+  constructor(private authService: AuthService, private router: Router) {}
 
   // Ciclo de vida do Angular - Após a visualização ser inicializada
   ngAfterViewInit() {
@@ -40,6 +43,11 @@ export class DashboardComponent implements AfterViewInit {
   // Método para selecionar uma aba
   selectTab(tab: any) {
     this.selectedTab = tab;
+
+    // Se o botão 'Log out' for clicado, faz o logout
+    if (tab.id === 'logout') {
+      this.logout();
+    }
   }
 
   // Método para alterar a aba em hover
@@ -59,5 +67,11 @@ export class DashboardComponent implements AfterViewInit {
       this.navigation.nativeElement.classList.toggle('active');
       this.main.nativeElement.classList.toggle('active');
     });
+  }
+
+  // Método para realizar o logout
+  private logout() {
+    this.authService.logout(); // Adapte conforme o método de logout no seu AuthService
+    this.router.navigate(['/login']); // Redireciona para a página de login
   }
 }
