@@ -7,6 +7,7 @@ const loja = require('./routes/loja'); // Módulo de loja
 const cargo = require('./routes/cargo'); // Módulo de cargo
 const registerController = require('./controllers/registerController'); // Módulo de registro
 const authRoutes = require('./routes/auth'); // Módulo de autenticação (novo)
+const empresaLogadaRoutes = require('./routes/empresaLogada'); // Corrigido o nome da rota para 'empresaLogada.js'
 
 const app = express();
 
@@ -42,7 +43,10 @@ app.use('/api', registerController); // Integrando o controller de registro
 // Rota de autenticação (login)
 app.use('/api/auth', authRoutes); // Integrando a rota de autenticação
 
-// Inicia o servidor na porta configurada
+// Rota para empresa logada (ajustada para a rota correta)
+app.use('/api/empresa-logada', empresaLogadaRoutes); // Corrigido para 'empresaLogada.js'
+
+ // Inicia o servidor na porta configurada
 const PORT = process.env.PORT || 3000; // Porta configurável via variável de ambiente
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

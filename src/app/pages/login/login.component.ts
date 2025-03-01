@@ -25,16 +25,18 @@ export class LoginComponent {
     private toastr: ToastrService
   ) {}
 
+  // Método para alternar a visibilidade da senha
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
 
+  // Método para enviar o formulário de login
   onSubmit(): void {
     this.errorMessage = ''; // Limpa a mensagem de erro antes de uma nova tentativa de login
     this.authService.login(this.email, this.senha).subscribe(
       (response) => {
         // Salva o token no localStorage
-        this.authService.saveToken(response.token);
+        this.authService.saveToken(response.token, this.email); // Passando o email também
 
         this.toastr.success('Login realizado com sucesso!', 'Sucesso');
         this.router.navigate(['/dashboard']); // Redireciona para o Dashboard após login

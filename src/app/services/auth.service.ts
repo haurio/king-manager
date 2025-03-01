@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';  // 'of' é utilizado para criar um Observable a partir de um valor
 
 @Injectable({
   providedIn: 'root'
@@ -26,15 +26,24 @@ export class AuthService {
   // Método para fazer logout (remove o token do localStorage)
   logout(): void {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('email');  // Remove também o email do localStorage
   }
 
-  // Método para salvar o token (pode ser utilizado ao fazer login com sucesso)
-  saveToken(token: string): void {
+  // Método para salvar o token e o email no localStorage
+  saveToken(token: string, email: string): void {
     localStorage.setItem('authToken', token);
+    localStorage.setItem('email', email);  // Salva o email
   }
 
   // Método para obter o token do localStorage
   getToken(): string | null {
     return localStorage.getItem('authToken');
+  }
+
+  // Método para obter o email do usuário logado
+  getUserEmail(): Observable<string> {
+    const email = localStorage.getItem('email');
+    // Usando 'of' do RxJS para retornar o email diretamente como um Observable
+    return email ? of(email) : new Observable<string>((observer) => observer.error('Email não encontrado'));
   }
 }

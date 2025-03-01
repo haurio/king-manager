@@ -1,8 +1,8 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // Caminho corrigido
-import { SidebarComponent } from '../../layout/sidebar/sidebar.component'; // Importando o SidebarComponent
+import { AuthService } from '../../services/auth.service'; // Caminho correto
+import { SidebarComponent } from '../../layout/sidebar/sidebar.component'; // Caminho correto
 
 @Component({
   selector: 'app-dashboard',
