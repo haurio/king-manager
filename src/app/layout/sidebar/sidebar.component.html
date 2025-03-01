@@ -1,0 +1,19 @@
+<div class="sidebar">
+  <div class="brand">
+    <img src="assets/images/Logo_icon.png" alt="Logo" class="logo" />
+    <span class="title">Grupo Alvim</span>
+  </div>
+  <hr class="separator" />
+  <ul class="nav-links" #navigation>
+    <li *ngFor="let tab of tabs">
+      <div
+        class="nav-item"
+        [ngClass]="{ active: selectedTab.id === tab.id, hovered: hoveredTab === tab.id }"
+        (click)="selectTab(tab)"
+        (mouseover)="hoverTab(tab.id)">
+        <i class="fa-solid icon" [ngClass]="'fa-' + tab.icon"></i>
+        <span class="title">{{ tab.label }}</span>
+      </div>
+    </li>
+  </ul>
+</div>

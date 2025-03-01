@@ -1,27 +1,13 @@
 <div class="container">
-  <!-- =============== Sidebar ================ -->
-  <div class="sidebar">
-    <div class="brand">
-      <img src="assets/images/Logo_icon.png" alt="Logo" class="logo" />
-      <span class="title">Grupo Alvim</span>
-    </div>
-    <hr class="separator" />
-    <ul class="nav-links" #navigation>
-      <li *ngFor="let tab of tabs">
-        <div
-          class="nav-item"
-          [ngClass]="{ active: selectedTab.id === tab.id, hovered: hoveredTab === tab.id }"
-          (click)="selectTab(tab)"
-          (mouseover)="hoverTab(tab.id)">
-          <!-- Ícone da aba -->
-          <i class="fa-solid icon" [ngClass]="'fa-' + tab.icon"></i>
-          <span class="title">{{ tab.label }}</span>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <!-- Sidebar -->
+  <app-sidebar
+    [tabs]="tabs"
+    [selectedTab]="selectedTab"
+    [hoveredTab]="hoveredTab"
+    (tabSelected)="selectTab($event)">
+  </app-sidebar>
 
-  <!-- ========================= Main Content ==================== -->
+  <!-- Main Content -->
   <div class="main">
     <div class="topbar">
       <div class="toggle" #toggle>
@@ -32,7 +18,7 @@
       </div>
     </div>
 
-    <!-- ======================= Card Box ================== -->
+    <!-- Card Box -->
     <div class="cardBox">
       <div class="card">
         <div class="cardInfo">
@@ -40,7 +26,7 @@
           <div class="cardName">PDV 1</div>
         </div>
         <div class="iconBx">
-          <i class="fa-solid fa-cash-register"></i> <!-- Ícone de PDV com caixa registradora -->
+          <i class="fa-solid fa-cash-register"></i>
         </div>
       </div>
 
@@ -50,7 +36,7 @@
           <div class="cardName">DELIVERY</div>
         </div>
         <div class="iconBx">
-          <i class="fa-solid fa-truck"></i> <!-- Ícone de Delivery com carrinho -->
+          <i class="fa-solid fa-truck"></i>
         </div>
       </div>
 
@@ -60,7 +46,7 @@
           <div class="cardName">TOTEM 1</div>
         </div>
         <div class="iconBx">
-          <i class="fa-solid fa-tv"></i> <!-- Ícone de Totem painel -->
+          <i class="fa-solid fa-tv"></i>
         </div>
       </div>
 
@@ -70,7 +56,9 @@
           <div class="cardName">TOTEM 2</div>
         </div>
         <div class="iconBx">
-          <i class="fa-solid fa-tv"></i> <!-- Ícone de Totem painel -->
+          <i class="fa-solid fa-tv"></i>
         </div>
       </div>
     </div>
+  </div>
+</div>

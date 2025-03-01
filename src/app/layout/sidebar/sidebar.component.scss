@@ -1,0 +1,99 @@
+/* ===================== Sidebar ===================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background: var(--sidebar-bg); /* Azul escuro */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease, padding 0.3s ease;
+  border-right: 2px solid var(--shadow-light);
+  z-index: 100;
+}
+
+/* ===================== Linha Separadora ===================== */
+.separator {
+  border: 0;
+  border-top: 2px solid var(--white); /* Linha fina e colorida */
+  margin-top: 2px;
+  width: 100%;
+}
+
+/* Sidebar - Título da Marca */
+.sidebar .brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0px;
+  color: var(--text-color);
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--primary-color); /* Linha separadora */
+  padding-bottom: 10px;
+}
+
+.sidebar .brand .logo {
+  width: 40px;
+  margin-right: 12px;
+}
+
+.sidebar .brand .title {
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.sidebar .nav-links {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .nav-links .nav-item {
+  position: relative;
+  display: flex;
+  width: 110%;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1rem;
+  padding: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sidebar .nav-links .nav-item .icon {
+  font-size: 1.5rem;
+  margin-right: 15px;
+  color: var(--icon-color);
+}
+
+.sidebar .nav-links .nav-item.active,
+.sidebar .nav-links .nav-item:hover {
+  background: var(--white);
+  color: var(--primary-color);
+  transform: translateX(10px);
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.sidebar .nav-links .nav-item.active .icon {
+  color: var(--icon-color-active); /* Ícone ativo */
+}
+
+/* Sidebar Colapsada */
+.sidebar.active {
+  width: 80px;
+  padding: 10px;
+}
+
+.sidebar.active .nav-links .nav-item {
+  justify-content: center;
+  padding: 10px;
+}
+
+.sidebar.active .nav-links .nav-item .icon {
+  margin-right: 0;
+}

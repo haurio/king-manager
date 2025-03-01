@@ -1,105 +1,8 @@
-/* ===================== Variáveis ===================== */
-
-/* ===================== Sidebar ===================== */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px;
-  height: 100vh;
-  background: var(--sidebar-bg); /* Azul escuro */
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  transition: width 0.3s ease, padding 0.3s ease;
-  border-right: 2px solid var(--shadow-light);
-  z-index: 100;
-}
-
-/* ===================== Linha Separadora ===================== */
-.separator {
-  border: 0;
-  border-top: 2px solid var(--white); /* Linha fina e colorida */
-  margin-top: 2px; /* /* Espaço mínimo entre o grupo Alvim e a linha */
-  width: 100%; /* Largura total */
-}
-
-.sidebar .brand {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Centraliza o título */
-  margin-bottom: 0px; /* Elimina o espaço extra abaixo do título */
-  color: var(--text-color);
-  font-weight: bold;
-  text-transform: uppercase;
-
-  /* Linha separadora entre "Grupo Alvim" e o conteúdo da sidebar */
-  border-bottom: 2px solid var(--primary-color); /* Linha separadora */
-  padding-bottom: 10px; /* Espaçamento abaixo da marca */
-}
-
-.sidebar .brand .logo {
-  width: 40px;
-  margin-right: 12px;
-}
-
-.sidebar .brand .title {
-  font-size: 1.4rem;
-  text-align: center; /* Garante que o texto esteja centralizado */
-}
-
-.sidebar .nav-links {
-  list-style: none;
-  padding-left: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar .nav-links .nav-item {
-  position: relative;
-  display: flex;
-  width: 110%;
-  text-decoration: none;
-  color: var(--text-color); /* Cor do texto */
-  font-size: 1rem;
-  padding: 12px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.sidebar .nav-links .nav-item .icon {
-  font-size: 1.5rem;
-  margin-right: 15px;
-  color: var(--icon-color); /* Cor dos ícones */
-}
-
-.sidebar .nav-links .nav-item.active,
-.sidebar .nav-links .nav-item:hover {
-  background: var(--white);
-  color: var(--primary-color);
-  transform: translateX(10px);
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-}
-
-/* Alterando a cor do ícone para azul quando a aba está ativa */
-.sidebar .nav-links .nav-item.active .icon {
-  color: var(--icon-color-active); /* Cor azul para ícone ativo */
-}
-
-/* Sidebar Colapsada */
-.sidebar.active {
-  width: 80px;
-  padding: 10px;
-}
-
-.sidebar.active .nav-links .nav-item {
-  justify-content: center;
-  padding: 10px;
-}
-
-.sidebar.active .nav-links .nav-item .icon {
-  margin-right: 0;
+/* ===================== Dashboard ===================== */
+.dashboard {
+  padding-left: 250px; /* Espaço para a sidebar */
+  margin-top: 60px; /* Para que o conteúdo não sobreponha a topbar */
+  transition: margin-left 0.3s ease; /* Transição suave ao alternar o colapso da sidebar */
 }
 
 /* ===================== Topbar ===================== */
@@ -153,92 +56,70 @@
   cursor: pointer;
   box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  font-family: 'Roboto', sans-serif; /* Aplica a fonte Roboto a todos os elementos dentro do card */
+  font-family: 'Roboto', sans-serif;
 }
 
 /* Efeito de hover */
 .cardBox .card:hover {
-  background: var(--primary-color); /* Cor de fundo do cartão ao passar o mouse */
-  color: var(--white); /* Cor do texto ao passar o mouse */
-  transform: scale(1.05); /* Aumento do cartão */
+  background: var(--primary-color);
+  color: var(--white);
+  transform: scale(1.05);
 }
 
 .cardBox .card .numbers {
-  position: relative;
   font-weight: 500;
-  font-size: 1.5rem; /* Ajuste o tamanho da fonte para um valor fixo mais confortável */
+  font-size: 1.5rem;
   color: var(--primary-color);
-  transition: color 0.3s ease; /* Transição para a mudança de cor */
-  z-index: 1; /* Garante que o número fique acima do ícone */
+  transition: color 0.3s ease;
+  z-index: 1;
 }
 
 .cardBox .card .cardName {
-  font-size: 1.2rem; /* Ajuste o tamanho da fonte do nome */
+  font-size: 1.2rem;
   position: relative;
-  color: #666; /* Cor cinza para o nome */
-  z-index: 0; /* Coloca o nome atrás do ícone */
-  transition: color 0.3s ease; /* Transição para a mudança de cor */
+  color: #666;
+  z-index: 0;
+  transition: color 0.3s ease;
 }
 
 .cardBox .card .iconBx {
-  font-size: 2rem; /* Ajuste o tamanho do ícone */
+  font-size: 2rem;
   color: var(--accent-color);
-  position: absolute; /* Posiciona o ícone fora do fluxo normal */
-  top: 50%; /* Centraliza o ícone verticalmente */
-  right: 10px; /* Ajuste a posição horizontal do ícone à direita */
-  transform: translateY(-50%); /* Centraliza verticalmente */
-  z-index: 2; /* Coloca o ícone na frente do nome */
-  transition: color 0.3s ease; /* Transição para a mudança de cor */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  z-index: 2;
+  transition: color 0.3s ease;
 }
 
 /* Efeito de hover nas partes internas */
 .cardBox .card:hover .numbers {
-  color: var(--white); /* Cor dos números ao passar o mouse */
+  color: var(--white);
 }
 
 .cardBox .card:hover .cardName {
-  color: var(--white); /* Cor do nome do cartão ao passar o mouse */
+  color: var(--white);
 }
 
 .cardBox .card:hover .iconBx {
-  color: var(--white); /* Cor do ícone ao passar o mouse */
+  color: var(--white);
 }
 
 /* ===================== Responsividade ===================== */
 @media (max-width: 991px) {
-  .sidebar {
-    width: 220px;
-  }
-  .topbar {
-    width: calc(100% - 220px);
-    left: 220px;
-  }
   .cardBox {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    width: 200px;
-  }
-  .topbar {
-    width: calc(100% - 200px);
-    left: 200px;
-  }
   .cardBox {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  .sidebar {
-    width: 180px;
-  }
-  .topbar {
-    width: calc(100% - 180px);
-    left: 180px;
-  }
   .cardBox {
     grid-template-columns: 1fr;
   }
