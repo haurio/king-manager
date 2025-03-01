@@ -1,4 +1,4 @@
-<div class="register-page-background"> <!-- Essa div recebe o fundo -->
+<div class="register-page-background">
   <div class="form-container">
     <h2>Registrar-se</h2>
     <form (ngSubmit)="onSubmit()" class="modern-form">
@@ -92,7 +92,9 @@
           required
         >
           <option value="" disabled selected>Selecione o Cargo</option>
-          <option *ngFor="let cargo of cargos" [value]="cargo.nome_cargo">{{ cargo.nome_cargo }}</option>
+          <option *ngFor="let cargo of cargos" [value]="cargo.nome_cargo">
+            {{ cargo.nome_cargo }}
+          </option>
         </select>
       </div>
 
@@ -107,12 +109,16 @@
           required
         >
           <option value="" disabled selected>Selecione a Empresa</option>
-          <option *ngFor="let empresa of empresas" [value]="empresa.nome_fantasia">{{ empresa.nome_fantasia }}</option>
+          <option *ngFor="let empresa of empresas" [value]="empresa.nome_fantasia">
+            {{ empresa.nome_fantasia }}
+          </option>
         </select>
       </div>
 
       <!-- Mensagem de erro -->
-      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
 
       <button type="submit" class="btn btn-primary btn-submit">Registrar</button>
     </form>

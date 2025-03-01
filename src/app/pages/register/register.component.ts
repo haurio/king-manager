@@ -1,23 +1,21 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // Adicionando a importação do Router
+import { Router } from '@angular/router';
 import { EmpresaService } from '../../services/empresa.service';
 import { CargoService } from '../../services/cargo.service';
 import { RegisterService } from '../../services/register.service';
+import { ToastrService } from 'ngx-toastr'; // Importação do ToastrService
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-  ],
+  imports: [FormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   providers: [EmpresaService, CargoService, RegisterService]
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
   currentYear: number = new Date().getFullYear();
   nome: string = '';
   email: string = '';
@@ -35,7 +33,8 @@ export class RegisterComponent implements OnInit{
   private empresaService = inject(EmpresaService);
   private cargoService = inject(CargoService);
   private registerService = inject(RegisterService);
-  private router = inject(Router); // Injeção do Router
+  private router = inject(Router);
+  private toastr = inject(ToastrService); // Injeção do ToastrService
 
   ngOnInit(): void {
     this.carregarEmpresas();
@@ -83,51 +82,44 @@ export class RegisterComponent implements OnInit{
   }
 
   onSubmit(): void {
-    this.errorMessage = ''; // Limpa mensagens anteriores
+    this.errorMessage = '';
 
-    // Verificando se todos os campos estão preenchidos corretamente
     if (!this.nome || !this.email || !this.senha || !this.senhaConfirmada || !this.telefone || !this.cargo || !this.loja) {
-      this.errorMessage = 'Todos os campos são obrigatórios!';
+      this.toastr.error('Todos os campos são obrigatórios!', 'Erro no cadastro');
       return;
     }
 
-    // Verificando se as senhas coincidem
     if (this.senha !== this.senhaConfirmada) {
-      this.errorMessage = 'As senhas não coincidem!';
+      this.toastr.error('As senhas não coincidem!', 'Erro no cadastro');
       return;
     }
 
-    // Verificando a complexidade da senha
     if (this.senha.length < 8 || !/[!@#$%^&*(),.?":{}|<>]/.test(this.senha)) {
-      this.errorMessage = 'A senha deve ter pelo menos 8 caracteres e um caractere especial.';
+      this.toastr.error('A senha deve ter pelo menos 8 caracteres e um caractere especial.', 'Erro no cadastro');
       return;
     }
 
-    // Agora estamos enviando os nomes dos cargos e lojas, ao invés dos IDs
     const userData = {
       nome: this.nome,
       email: this.email,
       senha: this.senha,
       telefone: this.telefone,
-      cargo: this.cargo,  // Enviando o nome do cargo
-      loja: this.loja  // Enviando o nome da loja
+      cargo: this.cargo,
+      loja: this.loja
     };
 
     console.log('Enviando dados para o backend:', userData);
 
-    // Enviando os dados para o backend
     this.registerService.registrarUsuario(userData).subscribe({
       next: (response) => {
         console.log('Usuário registrado com sucesso:', response);
-        alert('Cadastro realizado com sucesso!');
+        this.toastr.success('Cadastro realizado com sucesso!', 'Sucesso');
         this.limparCampos();
-
-        // Redireciona para a página de login após o registro bem-sucedido
         this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Erro ao registrar usuário:', error);
-        this.errorMessage = error.error?.error || 'Erro ao registrar o usuário. Tente novamente mais tarde.';
+        this.toastr.error(error.error?.error || 'Erro ao registrar o usuário. Tente novamente mais tarde.', 'Erro');
       }
     });
   }
