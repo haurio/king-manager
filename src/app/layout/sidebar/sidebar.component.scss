@@ -3,7 +3,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px;
+  width: 250px; /* Sidebar aberta */
   height: 100vh;
   background: var(--sidebar-bg); /* Azul escuro */
   padding: 20px;
@@ -25,26 +25,37 @@
 /* Sidebar - Título da Marca */
 .sidebar .brand {
   display: flex;
+  flex-direction: column; /* Ícone acima do nome */
   align-items: center;
   justify-content: center;
-  margin-bottom: 0px;
+  margin-bottom: 15px;
   color: var(--text-color);
   font-weight: bold;
   text-transform: uppercase;
-  border-bottom: 2px solid var(--primary-color); /* Linha separadora */
+  border-bottom: 2px solid var(--primary-color);
   padding-bottom: 10px;
-}
-
-.sidebar .brand .logo {
-  width: 40px;
-  margin-right: 12px;
-}
-
-.sidebar .brand .title {
-  font-size: 1.4rem;
   text-align: center;
 }
 
+/* Logo */
+.sidebar .brand .logo {
+  width: 90px; /* Ajustado para um tamanho maior */
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 5px; /* Espaço entre o logo e o nome */
+}
+
+/* Nome da Empresa */
+.sidebar .brand .title {
+  font-size: 18px; /* Reduzido para um tamanho mais equilibrado */
+  text-align: center;
+  word-break: break-word; /* Quebra o texto se for grande */
+  max-width: 180px; /* Define um limite para evitar que fique muito largo */
+  overflow-wrap: break-word; /* Força a quebra da linha */
+  line-height: 1.2; /* Melhor espaçamento */
+}
+
+/* ===================== Sidebar - Links de Navegação ===================== */
 .sidebar .nav-links {
   list-style: none;
   padding-left: 0;
@@ -55,45 +66,77 @@
 .sidebar .nav-links .nav-item {
   position: relative;
   display: flex;
-  width: 110%;
+  align-items: center;
+  width: 100%;
   text-decoration: none;
   color: var(--text-color);
-  font-size: 1rem;
-  padding: 12px;
+  font-size: 0.95rem; /* Reduzido um pouco para melhor ajuste */
+  padding: 10px 15px; /* Melhor espaçamento */
   transition: all 0.3s ease;
   cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 8px; /* Adicionando espaço entre as abas */
 }
 
+/* Ajustando o ícone e o espaçamento */
 .sidebar .nav-links .nav-item .icon {
-  font-size: 1.5rem;
-  margin-right: 15px;
+  font-size: 1.8rem; /* Aumentado o tamanho do ícone */
+  margin-right: 20px; /* Aumento o espaço entre o ícone e o nome */
   color: var(--icon-color);
 }
 
-.sidebar .nav-links .nav-item.active,
+/* Alterações de hover para abas */
 .sidebar .nav-links .nav-item:hover {
   background: var(--white);
   color: var(--primary-color);
-  transform: translateX(10px);
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
+  transform: translateX(5px);
+  border-radius: 25px 0 0 25px; /* Borda arredondada somente no lado esquerdo */
+  width: 120%; /* A largura se expande para 120% */
+  margin-left: 0; /* Remove o espaço à esquerda */
+  padding: 10px 15px; /* Garante que a aba não fique achatada */
 }
 
+/* Alterações para o item ativo */
+.sidebar .nav-links .nav-item.active {
+  background: var(--white);
+  color: var(--primary-color);
+  transform: translateX(5px);
+  border-radius: 25px 0 0 25px; /* Borda arredondada somente no lado esquerdo */
+  width: 120%; /* A largura se expande para 120% */
+  margin-left: 0; /* Remove o espaço à esquerda */
+  padding: 10px 15px; /* Garante que a aba não fique achatada */
+}
+
+/* Ícone ativo */
 .sidebar .nav-links .nav-item.active .icon {
   color: var(--icon-color-active); /* Ícone ativo */
 }
 
-/* Sidebar Colapsada */
+/* ===================== Sidebar Colapsada ===================== */
 .sidebar.active {
   width: 80px;
   padding: 10px;
 }
 
+/* Ajustes quando a sidebar está colapsada */
+.sidebar.active .brand {
+  align-items: center;
+}
+
+.sidebar.active .brand .logo {
+  width: 50px; /* Ajuste para a versão colapsada */
+  max-height: 50px;
+}
+
+.sidebar.active .brand .title {
+  display: none; /* Esconde o nome quando estiver colapsada */
+}
+
 .sidebar.active .nav-links .nav-item {
   justify-content: center;
-  padding: 10px;
+  padding: 12px;
 }
 
 .sidebar.active .nav-links .nav-item .icon {
-  margin-right: 0;
+  margin-right: 0; /* Remove o espaço do nome */
 }
