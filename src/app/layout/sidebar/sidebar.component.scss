@@ -39,7 +39,7 @@
 
 /* Logo */
 .sidebar .brand .logo {
-  width: 90px; /* Ajustado para um tamanho maior */
+  width: 90px !important; /* Ajustado para um tamanho maior */
   max-width: 100%;
   height: auto;
   margin-bottom: 5px; /* Espaço entre o logo e o nome */
@@ -47,7 +47,7 @@
 
 /* Nome da Empresa */
 .sidebar .brand .title {
-  font-size: 18px; /* Tamanho equilibrado */
+  font-size: 18px !important; /* Tamanho equilibrado */
   text-align: center;
   word-break: break-word; /* Quebra o texto se for grande */
   max-width: 180px; /* Limite para evitar largura excessiva */
@@ -87,8 +87,8 @@
 
 /* Ajustando o ícone e o espaçamento */
 .sidebar .nav-links .nav-item .icon {
-  font-size: 1.8rem; /* Aumentado o tamanho do ícone */
-  margin-right: 20px; /* Aumento o espaço entre o ícone e o nome */
+  font-size: 1.8rem !important; /* Aumentado o tamanho do ícone */
+  margin-right: 20px !important; /* Aumento o espaço entre o ícone e o nome */
   color: var(--icon-color);
 }
 
@@ -132,8 +132,8 @@
 }
 
 .sidebar.active .brand .logo {
-  width: 50px; /* Ajuste para a versão colapsada */
-  max-height: 50px;
+  width: 50px !important; /* Ajuste para a versão colapsada */
+  max-height: 50px !important;
 }
 
 .sidebar.active .brand .title {
@@ -175,9 +175,15 @@
   transform: scale(0.95); /* Inicialmente ligeiramente menor */
 }
 
-/* Animação do popup quando aparece */
 .popup-overlay .popup-content {
-  transform: scale(1);
+  transform: scale(0.95);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave no popup */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza a animação */
+}
+
+.popup-overlay .popup-content {
+  transform: scale(1); /* Efeito de escala */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra quando aparece */
 }
 
 /* Animações de hover nas empresas */
@@ -208,26 +214,35 @@
   transform: scale(1.3);
 }
 
-/* Fechar popup */
-.close-btn {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 15px;
-}
-
-/* Alteração de cor do botão de fechar ao passar o mouse */
-.close-btn:hover {
-  background-color: #0056b3; /* Cor mais escura */
-}
-
-/* Imagem do logo antes do nome da empresa no popup */
-.popup-content .empresas-list .empresa-item img {
-  width: 60px;  /* Ajuste o tamanho conforme necessário */
+/* Logo para a Alvim Participações */
+.logo-alvim {
+  width: 60px;  /* Tamanho do logo específico para Alvim Participações */
   height: auto;
-  margin-right: 10px;  /* Espaço entre o logo e o nome da empresa */
+  margin-bottom: 10px;  /* Espaço de 5px entre o logo e o nome */
+}
+
+/* Logo padrão para outras empresas */
+.logo-default {
+  width: 90px;  /* Tamanho menor para outras empresas */
+  height: auto;
+  margin-bottom: 10px;  /* Espaço de 5px entre o logo e o nome */
+}
+
+/* Logo no Popup para Alvim Participações */
+.popup-logo-alvim {
+  width: 100px;  /* Logo maior no popup para Alvim Participações */
+  height: auto;
+  margin-bottom: 5px;  /* Espaço de 5px entre o logo e o nome */
+}
+
+/* Logo no Popup para outras empresas */
+.popup-logo-default {
+  width: 60px;  /* Logo menor no popup para outras empresas */
+  height: auto;
+  margin-bottom: 5px;  /* Espaço de 5px entre o logo e o nome */
+}
+
+/* Estilo para o logo no popup */
+.popup-content .empresas-list .empresa-item img {
+  margin-right: 10px;  /* Espaço entre o logo e o nome */
 }

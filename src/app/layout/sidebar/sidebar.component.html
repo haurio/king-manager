@@ -1,6 +1,10 @@
 <div class="sidebar">
   <div class="brand">
-    <img src="assets/images/BurgerKing.png" alt="Logo" class="logo" />
+    <!-- Condicional para alterar o logo com base no nome da empresa -->
+    <img
+      [src]="empresaNome === 'Alvim Participações' ? 'assets/images/Logo_Alvim.png' : 'assets/images/BurgerKing.png'"
+      alt="Logo"
+      [ngClass]="{'logo-alvim': empresaNome === 'Alvim Participações', 'logo-default': empresaNome !== 'Alvim Participações'}" />
     <span class="title" (click)="showCompanyPopupMethod()">{{ empresaNome || 'Nome da Empresa' }}</span>
   </div>
   <hr class="separator" />
@@ -22,11 +26,14 @@
     <div class="popup-content" (click)="$event.stopPropagation()"> <!-- Evita que o clique no conteúdo feche o popup -->
       <ul class="empresas-list">
         <li *ngFor="let empresa of outrasEmpresas" class="empresa-item" (mouseover)="hoverEmpresa(empresa)" (mouseout)="resetEmpresaHover()">
-          <img src="assets/images/BurgerKing.png" alt="Logo Burger King" class="popup-logo" /> <!-- Imagem antes do nome -->
+          <!-- Condicional para a imagem do logo das empresas no popup -->
+          <img
+            [src]="empresa === 'Alvim Participações' ? 'assets/images/Logo_Alvim.png' : 'assets/images/BurgerKing.png'"
+            alt="Logo da Empresa"
+            [ngClass]="{'popup-logo-alvim': empresa === 'Alvim Participações', 'popup-logo-default': empresa !== 'Alvim Participações'}" />
           <span>{{ empresa }}</span>
         </li>
       </ul>
-      
     </div>
   </div>
 </div>
