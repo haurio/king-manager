@@ -24,14 +24,17 @@
   <!-- Popup de outras empresas -->
   <div *ngIf="isPopupVisible" class="popup-overlay" (click)="closePopup()">
     <div class="popup-content" (click)="$event.stopPropagation()"> <!-- Evita que o clique no conteúdo feche o popup -->
+      <!-- Título do Popup -->
+      <h3 class="popup-title">Selecione a empresa desejada!</h3>
+
       <ul class="empresas-list">
-        <li *ngFor="let empresa of outrasEmpresas" class="empresa-item" (mouseover)="hoverEmpresa(empresa)" (mouseout)="resetEmpresaHover()">
+        <li *ngFor="let empresa of outrasEmpresas" class="empresa-item" (mouseover)="hoverEmpresa(empresa.nome_fantasia)" (mouseout)="resetEmpresaHover()">
           <!-- Condicional para a imagem do logo das empresas no popup -->
           <img
-            [src]="empresa === 'Alvim Participações' ? 'assets/images/Logo_Alvim.png' : 'assets/images/BurgerKing.png'"
+            [src]="empresa.nome_fantasia === 'Alvim Participações' ? 'assets/images/Logo_Alvim.png' : 'assets/images/BurgerKing.png'"
             alt="Logo da Empresa"
-            [ngClass]="{'popup-logo-alvim': empresa === 'Alvim Participações', 'popup-logo-default': empresa !== 'Alvim Participações'}" />
-          <span>{{ empresa }}</span>
+            [ngClass]="{'popup-logo-alvim': empresa.nome_fantasia === 'Alvim Participações', 'popup-logo-default': empresa.nome_fantasia !== 'Alvim Participações'}" />
+          <span>{{ empresa.nome_fantasia }}</span> <!-- Exibindo o nome da empresa corretamente -->
         </li>
       </ul>
     </div>

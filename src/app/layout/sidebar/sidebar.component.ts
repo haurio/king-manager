@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { EmpresaLogadaService } from '../../services/empresa-logada.service';
 import { AuthService } from '../../services/auth.service';
+import { EmpresaService } from '../../services/empresa.service'; // Importando o serviço para buscar as empresas
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +20,7 @@ export class SidebarComponent implements OnInit {
 
   empresaNome: string = ''; // Variável para armazenar o nome da empresa
   isPopupVisible: boolean = false; // Controle do popup
-  outrasEmpresas: string[] = ['Burger King Imperador', 'Burger King Caldas Novas']; // Lista de empresas
+  outrasEmpresas: any[] = []; // Lista de empresas que será carregada dinamicamente
 
   tabs = [
     { id: 'dashboard', label: 'Dashboard', icon: 'home' },
@@ -35,7 +36,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private empresaLogadaService: EmpresaLogadaService,
-    private authService: AuthService
+    private authService: AuthService,
+    private empresaService: EmpresaService // Injetando o serviço para buscar as empresas
   ) {}
 
   ngOnInit(): void {
@@ -43,8 +45,17 @@ export class SidebarComponent implements OnInit {
       if (email) {
         this.empresaLogadaService.getEmpresaLogada(email).subscribe((response) => {
           if (response && response.loja) {
-            this.empresaNome = response.loja;
+            this.empresaNome = response.loja; // Obtendo a empresa logada
           }
+        });
+
+        // Buscando todas as empresas
+        this.empresaService.getLojas().subscribe((empresas: any[]) => {
+          // Agora mapeando para garantir que estamos buscando a propriedade 'nome_fantasia' corretamente
+          this.outrasEmpresas = empresas.map((empresa) => ({
+            empresa_id: empresa.empresa_id,
+            nome_fantasia: empresa.nome_fantasia // Garantindo que estamos acessando a propriedade correta
+          }));
         });
       }
     });
