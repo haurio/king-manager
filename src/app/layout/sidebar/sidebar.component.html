@@ -1,8 +1,7 @@
 <div class="sidebar">
   <div class="brand">
     <img src="assets/images/BurgerKing.png" alt="Logo" class="logo" />
-    <!-- Alteração aqui: Substituindo "Grupo Alvim" pelo nome da empresa -->
-    <span class="title">{{ empresaNome }}</span> <!-- Exibe o nome da empresa, se não houver fica vazio -->
+    <span class="title" (click)="showCompanyPopupMethod()">{{ empresaNome || 'Nome da Empresa' }}</span>
   </div>
   <hr class="separator" />
   <ul class="nav-links" #navigation>
@@ -17,4 +16,17 @@
       </div>
     </li>
   </ul>
+
+  <!-- Popup de outras empresas -->
+  <div *ngIf="isPopupVisible" class="popup-overlay" (click)="closePopup()">
+    <div class="popup-content" (click)="$event.stopPropagation()"> <!-- Evita que o clique no conteúdo feche o popup -->
+      <ul class="empresas-list">
+        <li *ngFor="let empresa of outrasEmpresas" class="empresa-item" (mouseover)="hoverEmpresa(empresa)" (mouseout)="resetEmpresaHover()">
+          <img src="assets/images/BurgerKing.png" alt="Logo Burger King" class="popup-logo" /> <!-- Imagem antes do nome -->
+          <span>{{ empresa }}</span>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
 </div>

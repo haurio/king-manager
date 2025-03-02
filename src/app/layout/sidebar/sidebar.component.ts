@@ -18,8 +18,9 @@ export class SidebarComponent implements OnInit {
   @Output() tabSelected = new EventEmitter<any>(); // Evento emitido para o DashboardComponent
 
   empresaNome: string = ''; // Variável para armazenar o nome da empresa
+  isPopupVisible: boolean = false; // Controle do popup
+  outrasEmpresas: string[] = ['Burger King Imperador', 'Burger King Caldas Novas']; // Lista de empresas
 
-  // Definição das tabs diretamente no SidebarComponent
   tabs = [
     { id: 'dashboard', label: 'Dashboard', icon: 'home' },
     { id: 'perfil', label: 'Perfil', icon: 'user' },
@@ -29,7 +30,7 @@ export class SidebarComponent implements OnInit {
     { id: 'transacoes', label: 'Transações Diárias', icon: 'exchange-alt' },
     { id: 'configuracao', label: 'Configurações', icon: 'cogs' },
     { id: 'resumo-financeiro', label: 'Resumo Financeiro', icon: 'chart-line' },
-    { id: 'logout', label: 'Log out', icon: 'sign-out-alt' } // Adicionando Logout
+    { id: 'logout', label: 'Log out', icon: 'sign-out-alt' }
   ];
 
   constructor(
@@ -38,26 +39,41 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Carrega o nome da empresa assim que o usuário for autenticado
     this.authService.getUserEmail().subscribe((email) => {
       if (email) {
         this.empresaLogadaService.getEmpresaLogada(email).subscribe((response) => {
           if (response && response.loja) {
-            this.empresaNome = response.loja; // Armazena o nome da empresa
-            console.log('Nome da empresa:', this.empresaNome);  // Log para depuração
+            this.empresaNome = response.loja;
           }
         });
       }
     });
   }
 
-  // Método para selecionar uma aba
   selectTab(tab: any) {
-    this.tabSelected.emit(tab); // Emite o evento de seleção da aba
+    this.tabSelected.emit(tab);
   }
 
-  // Método para alterar a aba em hover
   hoverTab(tabId: string) {
     this.hoveredTab = tabId;
+  }
+
+  // Função para abrir o popup
+  showCompanyPopupMethod() {
+    this.isPopupVisible = true;
+  }
+
+  // Função para fechar o popup
+  closePopup() {
+    this.isPopupVisible = false;
+  }
+
+  // Função para hover nas empresas
+  hoverEmpresa(empresa: string) {
+    // Animação pode ser aplicada aqui se necessário
+  }
+
+  resetEmpresaHover() {
+    // Reseta qualquer estilo de hover, se necessário
   }
 }

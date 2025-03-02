@@ -47,12 +47,19 @@
 
 /* Nome da Empresa */
 .sidebar .brand .title {
-  font-size: 18px; /* Reduzido para um tamanho mais equilibrado */
+  font-size: 18px; /* Tamanho equilibrado */
   text-align: center;
   word-break: break-word; /* Quebra o texto se for grande */
-  max-width: 180px; /* Define um limite para evitar que fique muito largo */
+  max-width: 180px; /* Limite para evitar largura excessiva */
   overflow-wrap: break-word; /* Força a quebra da linha */
   line-height: 1.2; /* Melhor espaçamento */
+  transition: transform 0.3s ease; /* Suaviza o aumento do título */
+  cursor: pointer; /* Muda o cursor para a mãozinha */
+}
+
+/* Efeito de Zoom no nome da empresa */
+.sidebar .brand .title:hover {
+  transform: scale(1.1); /* Aumenta o nome da empresa ao passar o mouse */
 }
 
 /* ===================== Sidebar - Links de Navegação ===================== */
@@ -90,7 +97,7 @@
   background: var(--white);
   color: var(--primary-color);
   transform: translateX(5px);
-  border-radius: 25px 0 0 25px; /* Borda arredondada somente no lado esquerdo */
+  border-radius: 25px 25px 25px 25px; /* Borda arredondada nos quatro lados */
   width: 120%; /* A largura se expande para 120% */
   margin-left: 0; /* Remove o espaço à esquerda */
   padding: 10px 15px; /* Garante que a aba não fique achatada */
@@ -101,10 +108,11 @@
   background: var(--white);
   color: var(--primary-color);
   transform: translateX(5px);
-  border-radius: 25px 0 0 25px; /* Borda arredondada somente no lado esquerdo */
+  border-radius: 25px 25px 25px 25px; /* Borda arredondada nos quatro lados */
   width: 120%; /* A largura se expande para 120% */
   margin-left: 0; /* Remove o espaço à esquerda */
   padding: 10px 15px; /* Garante que a aba não fique achatada */
+  transition: all 0.3s ease-in-out; /* Transição suave */
 }
 
 /* Ícone ativo */
@@ -139,4 +147,87 @@
 
 .sidebar.active .nav-links .nav-item .icon {
   margin-right: 0; /* Remove o espaço do nome */
+}
+
+/* ===================== Popup Overlay ===================== */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  transition: opacity 0.3s ease; /* Suaviza o efeito de abertura do popup */
+}
+
+/* Conteúdo do Popup */
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  transition: transform 0.3s ease; /* Suaviza a animação de entrada */
+  transform: scale(0.95); /* Inicialmente ligeiramente menor */
+}
+
+/* Animação do popup quando aparece */
+.popup-overlay .popup-content {
+  transform: scale(1);
+}
+
+/* Animações de hover nas empresas */
+.empresa-item {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, color 0.3s ease;
+  font-weight: bold;
+}
+
+/* Aumenta a empresa ao passar o mouse */
+.empresa-item:hover {
+  transform: scale(1.1); /* Aumenta o tamanho */
+  color: #007bff; /* Cor azul */
+}
+
+/* Ícone da empresa */
+.empresa-item i {
+  margin-right: 10px;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* Aumentando o ícone no hover */
+.empresa-item:hover i {
+  transform: scale(1.3);
+}
+
+/* Fechar popup */
+.close-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+}
+
+/* Alteração de cor do botão de fechar ao passar o mouse */
+.close-btn:hover {
+  background-color: #0056b3; /* Cor mais escura */
+}
+
+/* Imagem do logo antes do nome da empresa no popup */
+.popup-content .empresas-list .empresa-item img {
+  width: 60px;  /* Ajuste o tamanho conforme necessário */
+  height: auto;
+  margin-right: 10px;  /* Espaço entre o logo e o nome da empresa */
 }
